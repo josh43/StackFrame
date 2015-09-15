@@ -1,3 +1,3 @@
 URL:		http://sql1.000webhost.com/phpMyAdmin/index.php?db=a5828192_data
 username:	a5828192_user
-password:	W!ldcats
+password:	W1ldcats
