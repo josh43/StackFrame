@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "0F88C253D2A371BC397131B3E952C0558514A895",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "0F88C253D2A371BC397131B3E952C0558514A895" : 0,
+    "3A7955CD00815AB72BB856E7E248A07EA8CC927B" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "816E09F7-6A51-47A2-9DB9-385DA5DCD7B5",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "0F88C253D2A371BC397131B3E952C0558514A895" : "stackTemp",
+    "3A7955CD00815AB72BB856E7E248A07EA8CC927B" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "GeoServices",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "GeoServices\/GeoServices.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/josh43\/stackTemp.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0F88C253D2A371BC397131B3E952C0558514A895"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/josh43\/StackFrame.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3A7955CD00815AB72BB856E7E248A07EA8CC927B"
+    }
+  ]
+}
