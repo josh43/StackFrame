@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ViewController">
+            <connections>
+                <outlet property="currentLocation" destination="wqU-tN-4TO" id="Kba-uI-Sdc"/>
+                <outlet property="mapKitView" destination="Syv-eh-Cfb" id="p3l-Zj-EjH"/>
+                <outlet property="mapToolBar" destination="AQM-S9-BBf" id="Qnj-EP-ScZ"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Syv-eh-Cfb">
+                    <rect key="frame" x="0.0" y="-44" width="600" height="486"/>
+                </mapView>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AQM-S9-BBf">
+                    <rect key="frame" x="0.0" y="450" width="600" height="44"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <items>
+                        <barButtonItem title="Current Location" id="wqU-tN-4TO"/>
+                    </items>
+                    <color key="tintColor" red="0.62016689020000004" green="0.76089166019999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                </toolbar>
+                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="O7c-QJ-axl">
+                    <rect key="frame" x="69" y="-52" width="600" height="600"/>
+                </mapView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="O7c-QJ-axl"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="107" y="292"/>
+        </view>
+    </objects>
+</document>

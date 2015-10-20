@@ -1,0 +1,563 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		10976E73EE7C5DA6A3B5D2C1 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 668BD8FFDDBF6AEFE27EE23A /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8B0401491BB74356007DCDD3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401331BB74356007DCDD3 /* AppDelegate.m */; settings = {ASSET_TAGS = (); }; };
+		8B04014B1BB74356007DCDD3 /* DataManagement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401351BB74356007DCDD3 /* DataManagement.cpp */; settings = {ASSET_TAGS = (); }; };
+		8B04014C1BB74356007DCDD3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B0401371BB74356007DCDD3 /* Images.xcassets */; settings = {ASSET_TAGS = (); }; };
+		8B04014E1BB74356007DCDD3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401391BB74356007DCDD3 /* main.m */; settings = {ASSET_TAGS = (); }; };
+		8B04014F1BB74356007DCDD3 /* MapKitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B04013A1BB74356007DCDD3 /* MapKitView.xib */; settings = {ASSET_TAGS = (); }; };
+		8B0401501BB74356007DCDD3 /* SFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B04013C1BB74356007DCDD3 /* SFAppDelegate.m */; settings = {ASSET_TAGS = (); }; };
+		8B0401511BB74356007DCDD3 /* SFCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B04013E1BB74356007DCDD3 /* SFCallback.m */; settings = {ASSET_TAGS = (); }; };
+		8B0401521BB74356007DCDD3 /* SFChatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B04013F1BB74356007DCDD3 /* SFChatView.xib */; settings = {ASSET_TAGS = (); }; };
+		8B0401531BB74356007DCDD3 /* SFChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401411BB74356007DCDD3 /* SFChatViewController.m */; settings = {ASSET_TAGS = (); }; };
+		8B0401541BB74356007DCDD3 /* SFLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401431BB74356007DCDD3 /* SFLocation.m */; settings = {ASSET_TAGS = (); }; };
+		8B0401551BB74356007DCDD3 /* SFLoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0401441BB74356007DCDD3 /* SFLoginView.xib */; settings = {ASSET_TAGS = (); }; };
+		8B0401561BB74356007DCDD3 /* SFLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401461BB74356007DCDD3 /* SFLoginViewController.m */; settings = {ASSET_TAGS = (); }; };
+		8B0401571BB74356007DCDD3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401481BB74356007DCDD3 /* ViewController.m */; settings = {ASSET_TAGS = (); }; };
+		8B3A9BC11BCB77ED002EE407 /* orbitron-black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8B3A9BBD1BCB77ED002EE407 /* orbitron-black.otf */; settings = {ASSET_TAGS = (); }; };
+		8B3A9BC21BCB77ED002EE407 /* orbitron-bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8B3A9BBE1BCB77ED002EE407 /* orbitron-bold.otf */; settings = {ASSET_TAGS = (); }; };
+		8B3A9BC31BCB77ED002EE407 /* orbitron-light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8B3A9BBF1BCB77ED002EE407 /* orbitron-light.otf */; settings = {ASSET_TAGS = (); }; };
+		8B3A9BC41BCB77ED002EE407 /* orbitron-medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8B3A9BC01BCB77ED002EE407 /* orbitron-medium.otf */; settings = {ASSET_TAGS = (); }; };
+		8B3A9BC61BCB7B21002EE407 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B0401381BB74356007DCDD3 /* Info.plist */; settings = {ASSET_TAGS = (); }; };
+		8B3A9BC91BCB9B5D002EE407 /* SFPubNubHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3A9BC81BCB9B5D002EE407 /* SFPubNubHandler.m */; settings = {ASSET_TAGS = (); }; };
+		8B3A9BCC1BCB9D3C002EE407 /* SFMessageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3A9BCB1BCB9D3C002EE407 /* SFMessageStore.m */; settings = {ASSET_TAGS = (); }; };
+		8B3A9BD01BCBB22A002EE407 /* SFTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3A9BCF1BCBB22A002EE407 /* SFTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		8B5A676C1BB749B1008796D2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B5A67681BB749B1008796D2 /* LaunchScreen.xib */; settings = {ASSET_TAGS = (); }; };
+		8B5A676D1BB749B1008796D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B5A676A1BB749B1008796D2 /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
+		8B82294F1BB28E46003C38F5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B82294E1BB28E46003C38F5 /* MapKit.framework */; };
+		8B988C811BBA88F800715BC7 /* SFMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B988C801BBA88F800715BC7 /* SFMessage.m */; settings = {ASSET_TAGS = (); }; };
+		8BFF00611BC38F06008D7DC6 /* SFCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFF00601BC38F06008D7DC6 /* SFCameraViewController.m */; settings = {ASSET_TAGS = (); }; };
+		8BFF00671BC3A445008D7DC6 /* AAPLCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFF00641BC3A445008D7DC6 /* AAPLCameraViewController.m */; settings = {ASSET_TAGS = (); }; };
+		8BFF00681BC3A445008D7DC6 /* AAPLPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFF00661BC3A445008D7DC6 /* AAPLPreviewView.m */; settings = {ASSET_TAGS = (); }; };
+		8BFF006A1BC3A4E9008D7DC6 /* AAPLCameraView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BFF00691BC3A4E9008D7DC6 /* AAPLCameraView.xib */; settings = {ASSET_TAGS = (); }; };
+		D814A0171BBBBE0400B6671A /* cartman.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D814A0161BBBBE0400B6671A /* cartman.jpg */; settings = {ASSET_TAGS = (); }; };
+		D8D37A691BCE5E5900B57BEE /* SFImageTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D37A681BCE5E5900B57BEE /* SFImageTableCell.m */; settings = {ASSET_TAGS = (); }; };
+		D8D50D1B1BBBD7330066C125 /* Topic Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D8D50D1A1BBBD7330066C125 /* Topic Filled-50.png */; settings = {ASSET_TAGS = (); }; };
+		D8D50D1D1BBBDB500066C125 /* ios7_camera_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8D50D1C1BBBDB500066C125 /* ios7_camera_logo.jpg */; settings = {ASSET_TAGS = (); }; };
+		D8D564271BC24FB6006ED789 /* AppDesign in Resources */ = {isa = PBXBuildFile; fileRef = D8D564261BC24FB6006ED789 /* AppDesign */; settings = {ASSET_TAGS = (); }; };
+		D8D564291BC25530006ED789 /* AppImages in Resources */ = {isa = PBXBuildFile; fileRef = D8D564281BC25530006ED789 /* AppImages */; settings = {ASSET_TAGS = (); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		032E07721BAAA7B30008F57F /* StackFrame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StackFrame.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E58827BF0E9F273AACB5FE9 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		668BD8FFDDBF6AEFE27EE23A /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B0401321BB74356007DCDD3 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Source/AppDelegate.h; sourceTree = "<group>"; };
+		8B0401331BB74356007DCDD3 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Source/AppDelegate.m; sourceTree = "<group>"; };
+		8B0401351BB74356007DCDD3 /* DataManagement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataManagement.cpp; path = Source/DataManagement.cpp; sourceTree = "<group>"; };
+		8B0401361BB74356007DCDD3 /* DataManagement.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = DataManagement.hpp; path = Source/DataManagement.hpp; sourceTree = "<group>"; };
+		8B0401371BB74356007DCDD3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Source/Images.xcassets; sourceTree = "<group>"; };
+		8B0401381BB74356007DCDD3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Source/Info.plist; sourceTree = "<group>"; };
+		8B0401391BB74356007DCDD3 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/main.m; sourceTree = "<group>"; };
+		8B04013A1BB74356007DCDD3 /* MapKitView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MapKitView.xib; path = Source/MapKitView.xib; sourceTree = "<group>"; };
+		8B04013B1BB74356007DCDD3 /* SFAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFAppDelegate.h; path = Source/SFAppDelegate.h; sourceTree = "<group>"; };
+		8B04013C1BB74356007DCDD3 /* SFAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFAppDelegate.m; path = Source/SFAppDelegate.m; sourceTree = "<group>"; };
+		8B04013D1BB74356007DCDD3 /* SFCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFCallback.h; path = Source/SFCallback.h; sourceTree = "<group>"; };
+		8B04013E1BB74356007DCDD3 /* SFCallback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFCallback.m; path = Source/SFCallback.m; sourceTree = "<group>"; };
+		8B04013F1BB74356007DCDD3 /* SFChatView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SFChatView.xib; path = Source/SFChatView.xib; sourceTree = "<group>"; };
+		8B0401401BB74356007DCDD3 /* SFChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFChatViewController.h; path = Source/SFChatViewController.h; sourceTree = "<group>"; };
+		8B0401411BB74356007DCDD3 /* SFChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFChatViewController.m; path = Source/SFChatViewController.m; sourceTree = "<group>"; };
+		8B0401421BB74356007DCDD3 /* SFLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFLocation.h; path = Source/SFLocation.h; sourceTree = "<group>"; };
+		8B0401431BB74356007DCDD3 /* SFLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFLocation.m; path = Source/SFLocation.m; sourceTree = "<group>"; };
+		8B0401441BB74356007DCDD3 /* SFLoginView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SFLoginView.xib; path = Source/SFLoginView.xib; sourceTree = "<group>"; };
+		8B0401451BB74356007DCDD3 /* SFLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFLoginViewController.h; path = Source/SFLoginViewController.h; sourceTree = "<group>"; };
+		8B0401461BB74356007DCDD3 /* SFLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFLoginViewController.m; path = Source/SFLoginViewController.m; sourceTree = "<group>"; };
+		8B0401471BB74356007DCDD3 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = Source/ViewController.h; sourceTree = "<group>"; };
+		8B0401481BB74356007DCDD3 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = Source/ViewController.m; sourceTree = "<group>"; };
+		8B3A9BBD1BCB77ED002EE407 /* orbitron-black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "orbitron-black.otf"; path = "Orbitron/orbitron-black.otf"; sourceTree = "<group>"; };
+		8B3A9BBE1BCB77ED002EE407 /* orbitron-bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "orbitron-bold.otf"; path = "Orbitron/orbitron-bold.otf"; sourceTree = "<group>"; };
+		8B3A9BBF1BCB77ED002EE407 /* orbitron-light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "orbitron-light.otf"; path = "Orbitron/orbitron-light.otf"; sourceTree = "<group>"; };
+		8B3A9BC01BCB77ED002EE407 /* orbitron-medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "orbitron-medium.otf"; path = "Orbitron/orbitron-medium.otf"; sourceTree = "<group>"; };
+		8B3A9BC71BCB9B5D002EE407 /* SFPubNubHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPubNubHandler.h; sourceTree = "<group>"; };
+		8B3A9BC81BCB9B5D002EE407 /* SFPubNubHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFPubNubHandler.m; sourceTree = "<group>"; };
+		8B3A9BCA1BCB9D3C002EE407 /* SFMessageStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFMessageStore.h; sourceTree = "<group>"; };
+		8B3A9BCB1BCB9D3C002EE407 /* SFMessageStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFMessageStore.m; sourceTree = "<group>"; };
+		8B3A9BCE1BCBB22A002EE407 /* SFTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFTableViewCell.h; sourceTree = "<group>"; };
+		8B3A9BCF1BCBB22A002EE407 /* SFTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFTableViewCell.m; sourceTree = "<group>"; };
+		8B5A67691BB749B1008796D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Source/Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		8B5A676B1BB749B1008796D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Source/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8B82294E1BB28E46003C38F5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		8B988C7F1BBA88F800715BC7 /* SFMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFMessage.h; sourceTree = "<group>"; };
+		8B988C801BBA88F800715BC7 /* SFMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFMessage.m; sourceTree = "<group>"; };
+		8BFF005F1BC38F06008D7DC6 /* SFCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFCameraViewController.h; sourceTree = "<group>"; };
+		8BFF00601BC38F06008D7DC6 /* SFCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFCameraViewController.m; sourceTree = "<group>"; };
+		8BFF00631BC3A445008D7DC6 /* AAPLCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AAPLCameraViewController.h; path = Source/AAPLCamera/AAPLCameraViewController.h; sourceTree = "<group>"; };
+		8BFF00641BC3A445008D7DC6 /* AAPLCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AAPLCameraViewController.m; path = Source/AAPLCamera/AAPLCameraViewController.m; sourceTree = "<group>"; };
+		8BFF00651BC3A445008D7DC6 /* AAPLPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AAPLPreviewView.h; path = Source/AAPLCamera/AAPLPreviewView.h; sourceTree = "<group>"; };
+		8BFF00661BC3A445008D7DC6 /* AAPLPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AAPLPreviewView.m; path = Source/AAPLCamera/AAPLPreviewView.m; sourceTree = "<group>"; };
+		8BFF00691BC3A4E9008D7DC6 /* AAPLCameraView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AAPLCameraView.xib; sourceTree = "<group>"; };
+		D814A0151BBBA77F00B6671A /* TypeDeclerations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TypeDeclerations.h; sourceTree = "<group>"; };
+		D814A0161BBBBE0400B6671A /* cartman.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cartman.jpg; sourceTree = "<group>"; };
+		D8D37A671BCE5E5900B57BEE /* SFImageTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFImageTableCell.h; sourceTree = "<group>"; };
+		D8D37A681BCE5E5900B57BEE /* SFImageTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFImageTableCell.m; sourceTree = "<group>"; };
+		D8D50D1A1BBBD7330066C125 /* Topic Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Topic Filled-50.png"; sourceTree = "<group>"; };
+		D8D50D1C1BBBDB500066C125 /* ios7_camera_logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ios7_camera_logo.jpg; sourceTree = "<group>"; };
+		D8D564261BC24FB6006ED789 /* AppDesign */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AppDesign; path = images/AppDesign; sourceTree = "<group>"; };
+		D8D564281BC25530006ED789 /* AppImages */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AppImages; path = images/AppImages; sourceTree = "<group>"; };
+		F0413E9391E4AEFBBB911A15 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		032E076F1BAAA7B30008F57F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B82294F1BB28E46003C38F5 /* MapKit.framework in Frameworks */,
+				10976E73EE7C5DA6A3B5D2C1 /* Pods.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		01812C8302408AD43761E5F9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				668BD8FFDDBF6AEFE27EE23A /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		032E07691BAAA7B20008F57F = {
+			isa = PBXGroup;
+			children = (
+				8B3A9BBC1BCB77CD002EE407 /* Fonts */,
+				D8D564281BC25530006ED789 /* AppImages */,
+				D8D564261BC24FB6006ED789 /* AppDesign */,
+				D8D50D1C1BBBDB500066C125 /* ios7_camera_logo.jpg */,
+				D8D50D1A1BBBD7330066C125 /* Topic Filled-50.png */,
+				D814A0161BBBBE0400B6671A /* cartman.jpg */,
+				8B04010B1BB742D9007DCDD3 /* Source */,
+				8B5A67671BB7498B008796D2 /* Base.lproj */,
+				8B82294E1BB28E46003C38F5 /* MapKit.framework */,
+				032E07731BAAA7B30008F57F /* Products */,
+				660988FC0942BC09DF694FA1 /* Pods */,
+				01812C8302408AD43761E5F9 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		032E07731BAAA7B30008F57F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				032E07721BAAA7B30008F57F /* StackFrame.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		660988FC0942BC09DF694FA1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3E58827BF0E9F273AACB5FE9 /* Pods.debug.xcconfig */,
+				F0413E9391E4AEFBBB911A15 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		8B04010B1BB742D9007DCDD3 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				8B3A9BCD1BCB9D53002EE407 /* Model */,
+				8BFF00621BC3A404008D7DC6 /* APPLCamera */,
+				8B0401321BB74356007DCDD3 /* AppDelegate.h */,
+				8B0401331BB74356007DCDD3 /* AppDelegate.m */,
+				8B0401351BB74356007DCDD3 /* DataManagement.cpp */,
+				8B0401361BB74356007DCDD3 /* DataManagement.hpp */,
+				8B0401371BB74356007DCDD3 /* Images.xcassets */,
+				8B0401381BB74356007DCDD3 /* Info.plist */,
+				8B0401391BB74356007DCDD3 /* main.m */,
+				8B04013A1BB74356007DCDD3 /* MapKitView.xib */,
+				8B04013B1BB74356007DCDD3 /* SFAppDelegate.h */,
+				8B04013C1BB74356007DCDD3 /* SFAppDelegate.m */,
+				8B04013D1BB74356007DCDD3 /* SFCallback.h */,
+				8B3A9BC71BCB9B5D002EE407 /* SFPubNubHandler.h */,
+				8B3A9BC81BCB9B5D002EE407 /* SFPubNubHandler.m */,
+				8B04013E1BB74356007DCDD3 /* SFCallback.m */,
+				8B04013F1BB74356007DCDD3 /* SFChatView.xib */,
+				8B3A9BCE1BCBB22A002EE407 /* SFTableViewCell.h */,
+				8B3A9BCF1BCBB22A002EE407 /* SFTableViewCell.m */,
+				D8D37A671BCE5E5900B57BEE /* SFImageTableCell.h */,
+				D8D37A681BCE5E5900B57BEE /* SFImageTableCell.m */,
+				8B0401401BB74356007DCDD3 /* SFChatViewController.h */,
+				8B0401411BB74356007DCDD3 /* SFChatViewController.m */,
+				8B0401421BB74356007DCDD3 /* SFLocation.h */,
+				8B0401431BB74356007DCDD3 /* SFLocation.m */,
+				8B0401441BB74356007DCDD3 /* SFLoginView.xib */,
+				8B0401451BB74356007DCDD3 /* SFLoginViewController.h */,
+				8B0401461BB74356007DCDD3 /* SFLoginViewController.m */,
+				8B0401471BB74356007DCDD3 /* ViewController.h */,
+				8B0401481BB74356007DCDD3 /* ViewController.m */,
+				D814A0151BBBA77F00B6671A /* TypeDeclerations.h */,
+				8BFF005F1BC38F06008D7DC6 /* SFCameraViewController.h */,
+				8BFF00601BC38F06008D7DC6 /* SFCameraViewController.m */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		8B3A9BBC1BCB77CD002EE407 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				8B3A9BBD1BCB77ED002EE407 /* orbitron-black.otf */,
+				8B3A9BBE1BCB77ED002EE407 /* orbitron-bold.otf */,
+				8B3A9BBF1BCB77ED002EE407 /* orbitron-light.otf */,
+				8B3A9BC01BCB77ED002EE407 /* orbitron-medium.otf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		8B3A9BCD1BCB9D53002EE407 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8B3A9BCA1BCB9D3C002EE407 /* SFMessageStore.h */,
+				8B3A9BCB1BCB9D3C002EE407 /* SFMessageStore.m */,
+				8B988C7F1BBA88F800715BC7 /* SFMessage.h */,
+				8B988C801BBA88F800715BC7 /* SFMessage.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		8B5A67671BB7498B008796D2 /* Base.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				8B5A67681BB749B1008796D2 /* LaunchScreen.xib */,
+				8B5A676A1BB749B1008796D2 /* Main.storyboard */,
+			);
+			name = Base.lproj;
+			sourceTree = "<group>";
+		};
+		8BFF00621BC3A404008D7DC6 /* APPLCamera */ = {
+			isa = PBXGroup;
+			children = (
+				8BFF00631BC3A445008D7DC6 /* AAPLCameraViewController.h */,
+				8BFF00641BC3A445008D7DC6 /* AAPLCameraViewController.m */,
+				8BFF00651BC3A445008D7DC6 /* AAPLPreviewView.h */,
+				8BFF00661BC3A445008D7DC6 /* AAPLPreviewView.m */,
+				8BFF00691BC3A4E9008D7DC6 /* AAPLCameraView.xib */,
+			);
+			name = APPLCamera;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		032E07711BAAA7B30008F57F /* StackFrame */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 032E07951BAAA7B30008F57F /* Build configuration list for PBXNativeTarget "StackFrame" */;
+			buildPhases = (
+				09A2E70E22B4B763BEDFD5DB /* Check Pods Manifest.lock */,
+				032E076E1BAAA7B30008F57F /* Sources */,
+				032E076F1BAAA7B30008F57F /* Frameworks */,
+				032E07701BAAA7B30008F57F /* Resources */,
+				A3348D55F42C4B1DC53D2DF1 /* Embed Pods Frameworks */,
+				0B364B9BEB74724CCB8F0C00 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StackFrame;
+			productName = GeoServices;
+			productReference = 032E07721BAAA7B30008F57F /* StackFrame.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		032E076A1BAAA7B20008F57F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Josh ";
+				TargetAttributes = {
+					032E07711BAAA7B30008F57F = {
+						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = 875M28JE7F;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 032E076D1BAAA7B20008F57F /* Build configuration list for PBXProject "StackFrame" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 032E07691BAAA7B20008F57F;
+			productRefGroup = 032E07731BAAA7B30008F57F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				032E07711BAAA7B30008F57F /* StackFrame */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		032E07701BAAA7B30008F57F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B0401551BB74356007DCDD3 /* SFLoginView.xib in Resources */,
+				8B04014C1BB74356007DCDD3 /* Images.xcassets in Resources */,
+				8B3A9BC11BCB77ED002EE407 /* orbitron-black.otf in Resources */,
+				8B5A676D1BB749B1008796D2 /* Main.storyboard in Resources */,
+				D814A0171BBBBE0400B6671A /* cartman.jpg in Resources */,
+				D8D50D1D1BBBDB500066C125 /* ios7_camera_logo.jpg in Resources */,
+				D8D564291BC25530006ED789 /* AppImages in Resources */,
+				8B3A9BC41BCB77ED002EE407 /* orbitron-medium.otf in Resources */,
+				8B5A676C1BB749B1008796D2 /* LaunchScreen.xib in Resources */,
+				8B0401521BB74356007DCDD3 /* SFChatView.xib in Resources */,
+				8B3A9BC61BCB7B21002EE407 /* Info.plist in Resources */,
+				8B3A9BC31BCB77ED002EE407 /* orbitron-light.otf in Resources */,
+				8B04014F1BB74356007DCDD3 /* MapKitView.xib in Resources */,
+				8BFF006A1BC3A4E9008D7DC6 /* AAPLCameraView.xib in Resources */,
+				D8D564271BC24FB6006ED789 /* AppDesign in Resources */,
+				D8D50D1B1BBBD7330066C125 /* Topic Filled-50.png in Resources */,
+				8B3A9BC21BCB77ED002EE407 /* orbitron-bold.otf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		09A2E70E22B4B763BEDFD5DB /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		0B364B9BEB74724CCB8F0C00 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A3348D55F42C4B1DC53D2DF1 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		032E076E1BAAA7B30008F57F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B3A9BD01BCBB22A002EE407 /* SFTableViewCell.m in Sources */,
+				8B0401571BB74356007DCDD3 /* ViewController.m in Sources */,
+				8B3A9BC91BCB9B5D002EE407 /* SFPubNubHandler.m in Sources */,
+				8BFF00681BC3A445008D7DC6 /* AAPLPreviewView.m in Sources */,
+				8BFF00611BC38F06008D7DC6 /* SFCameraViewController.m in Sources */,
+				8B0401511BB74356007DCDD3 /* SFCallback.m in Sources */,
+				8B0401491BB74356007DCDD3 /* AppDelegate.m in Sources */,
+				8B3A9BCC1BCB9D3C002EE407 /* SFMessageStore.m in Sources */,
+				8B0401541BB74356007DCDD3 /* SFLocation.m in Sources */,
+				8B0401501BB74356007DCDD3 /* SFAppDelegate.m in Sources */,
+				8B0401531BB74356007DCDD3 /* SFChatViewController.m in Sources */,
+				8B988C811BBA88F800715BC7 /* SFMessage.m in Sources */,
+				8B04014E1BB74356007DCDD3 /* main.m in Sources */,
+				8B04014B1BB74356007DCDD3 /* DataManagement.cpp in Sources */,
+				D8D37A691BCE5E5900B57BEE /* SFImageTableCell.m in Sources */,
+				8B0401561BB74356007DCDD3 /* SFLoginViewController.m in Sources */,
+				8BFF00671BC3A445008D7DC6 /* AAPLCameraViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		8B5A67681BB749B1008796D2 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8B5A67691BB749B1008796D2 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		8B5A676A1BB749B1008796D2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8B5A676B1BB749B1008796D2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		032E07931BAAA7B30008F57F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		032E07941BAAA7B30008F57F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: josh mcloskey (BX375ATWG9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		032E07961BAAA7B30008F57F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3E58827BF0E9F273AACB5FE9 /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "JRM-corp.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = StackFrame;
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		032E07971BAAA7B30008F57F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F0413E9391E4AEFBBB911A15 /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "JRM-corp.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = StackFrame;
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		032E076D1BAAA7B20008F57F /* Build configuration list for PBXProject "StackFrame" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				032E07931BAAA7B30008F57F /* Debug */,
+				032E07941BAAA7B30008F57F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		032E07951BAAA7B30008F57F /* Build configuration list for PBXNativeTarget "StackFrame" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				032E07961BAAA7B30008F57F /* Debug */,
+				032E07971BAAA7B30008F57F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 032E076A1BAAA7B20008F57F /* Project object */;
+}
