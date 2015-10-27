@@ -1,0 +1,60 @@
+So in an effort to move to a unified and scalable service, I have created for 
+us an account on the hosting website OpenShift.com. Using OpenShift is actually
+pretty simple, and I already have everything we need up and running, but of 
+course we'll need to do some editing to the Node code as well as get the
+MongoDB set up and working. As of right now there is a simple chat room
+set up at:
+
+http://nodejs-stackframe.rhcloud.com/
+
+This is where we'll send and receive requests from our app, but navigating 
+there presents you with a simple HTML page for testing. As far as making
+actual changes to the server (which we won't have to do often), you can head
+to the OpenShift developer console at: 
+
+https://openshift.redhat.com/app/login?then=%2Fapp%2Fconsole
+username: dburnsii@email.arizona.edu
+password: W1ldcats
+
+That will take you to the portal from which you can see everything going on.
+In order to make changes to the code, Openshift uses git to update and refresh
+the servers. In order to make changes:
+
+1. Install git if you don't have it already:
+
+sudo apt-get install git
+
+2. Clone the Git repository
+
+git clone ssh://56202eea0c1e66ed60000088@nodejs-stackframe.rhcloud.com/~/git/nodejs.git/ [DirectoryToCloneTo]
+
+3. Make changes locally
+
+4. Push the changes to the server, it'll give you the console output of the server
+in the terminal window you push from
+
+git add [files to add ("." for all)]
+git commit
+git push
+
+Besides making changes to the code, you'll also want to install rhc, which gives
+you remote control over the server without having to SSH or authenticate every time
+
+sudo apt-get install rhc
+
+OR
+
+sudo apt-get install ruby-full
+sudo apt-get install rubygems
+sudo gem install rhc
+
+
+THEN
+
+rhc setup
+
+With that, you will be given access to the tools and options that will allow
+you to start and stop the server, along with other functions we may need
+going forward. With that, we shouldn't need to much else regarding server
+services, and scaling up the app will be very easy with the inexpensive and
+flexible pricing options that OpenShift offers. Lets do this guys!
