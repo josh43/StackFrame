@@ -1,28 +1,31 @@
-FileDriver.prototype.getCollection = function(callback){
-	this.db.collection('files',function(error,file_collection){
-	if(error)
-		callback(error);
-	else
-		callback(null,file_collection);
-	});
+var ObjectID = require('mongodb').ObjectID
+  , fs = require('fs'); //1
+ 
+FileDriver = function(db) { //2
+  this.db = db;
 };
 
+FileDriver.prototype.getCollection = function(callback) {
+  this.db.collection('files', function(error, file_collection) { //1
+    if( error ) callback(error);
+    else callback(null, file_collection);
+  });
+};
+ 
 //find a specific file
-FileDriver.prototype.get = function(id, callback) {
-    this.getCollection(function(error, file_collection) { //1
-        if (error) callback(error);
+FileDriver.prototype.get = function(id, callback) { 
+    this.getCollection(function(error, file_collection) { //2
+        if (error) callback(error)
         else {
-            var checkForHexRegExp = new RegExp("^[0-9a-fA-F]{24}$"); //2
+            var checkForHexRegExp = new RegExp("^[0-9a-fA-F]{24}$"); //3
             if (!checkForHexRegExp.test(id)) callback({error: "invalid id"});
-            else file_collection.findOne({'_id':ObjectID(id)}, function(error,doc) { //3
-                if (error) callback(error);
-                else callback(null, doc);
+            else file_collection.findOne({'_id':ObjectID(id)}, function(error,doc) { //4
+            	if (error) callback(error)
+            	else callback(null, doc);
             });
         }
     });
-};
-
-
+}
 
 FileDriver.prototype.handleGet = function(req, res) { //1
     var fileId = req.params.id;
@@ -40,13 +43,12 @@ FileDriver.prototype.handleGet = function(req, res) { //1
     } else {
 	    res.send(404, 'file not found');
     }
-};
+}
 
-
-
+//save new file
 FileDriver.prototype.save = function(obj, callback) { //1
     this.getCollection(function(error, the_collection) {
-      if( error ) callback(error);
+      if( error ) callback(error)
       else {
         obj.created_at = new Date();
         the_collection.insert(obj, function() {
@@ -54,9 +56,8 @@ FileDriver.prototype.save = function(obj, callback) { //1
         });
       }
     });
-}
-
-
+};
+ 
 FileDriver.prototype.getNewFileId = function(newobj, callback) { //2
 	this.save(newobj, function(err,obj) {
 		if (err) { callback(err); } 
@@ -64,11 +65,10 @@ FileDriver.prototype.getNewFileId = function(newobj, callback) { //2
 	});
 };
 
-
 FileDriver.prototype.handleUploadRequest = function(req, res) { //1
     var ctype = req.get("content-type"); //2
     var ext = ctype.substr(ctype.indexOf('/')+1); //3
-    if (ext) {ext = '.' + ext; } else {ext = '';}
+    if (ext) {ext = '.' + ext; } else {ext = ''};
     this.getNewFileId({'content-type':ctype, 'ext':ext}, function(err,id) { //4
         if (err) { res.send(400, err); } 
         else { 	         

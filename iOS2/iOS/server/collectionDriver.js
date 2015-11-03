@@ -80,4 +80,17 @@ CollectionDriver.prototype.delete = function(collectionName, entityId, callback)
     });
 }
 
+//Perform a collection query
+CollectionDriver.prototype.query = function(collectionName, query, callback) { //1
+    this.getCollection(collectionName, function(error, the_collection) { //2
+      if( error ) callback(error)
+      else {
+        the_collection.find(query).toArray(function(error, results) { //3
+          if( error ) callback(error)
+          else callback(null, results)
+        });
+      }
+    });
+};
+
 exports.CollectionDriver = CollectionDriver;
