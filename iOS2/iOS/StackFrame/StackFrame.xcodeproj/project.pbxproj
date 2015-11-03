@@ -8,41 +8,43 @@
 
 /* Begin PBXBuildFile section */
 		10976E73EE7C5DA6A3B5D2C1 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 668BD8FFDDBF6AEFE27EE23A /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		8B0401491BB74356007DCDD3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401331BB74356007DCDD3 /* AppDelegate.m */; settings = {ASSET_TAGS = (); }; };
-		8B04014B1BB74356007DCDD3 /* DataManagement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401351BB74356007DCDD3 /* DataManagement.cpp */; settings = {ASSET_TAGS = (); }; };
-		8B04014C1BB74356007DCDD3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B0401371BB74356007DCDD3 /* Images.xcassets */; settings = {ASSET_TAGS = (); }; };
-		8B04014E1BB74356007DCDD3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401391BB74356007DCDD3 /* main.m */; settings = {ASSET_TAGS = (); }; };
-		8B04014F1BB74356007DCDD3 /* MapKitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B04013A1BB74356007DCDD3 /* MapKitView.xib */; settings = {ASSET_TAGS = (); }; };
-		8B0401501BB74356007DCDD3 /* SFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B04013C1BB74356007DCDD3 /* SFAppDelegate.m */; settings = {ASSET_TAGS = (); }; };
-		8B0401511BB74356007DCDD3 /* SFCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B04013E1BB74356007DCDD3 /* SFCallback.m */; settings = {ASSET_TAGS = (); }; };
-		8B0401521BB74356007DCDD3 /* SFChatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B04013F1BB74356007DCDD3 /* SFChatView.xib */; settings = {ASSET_TAGS = (); }; };
-		8B0401531BB74356007DCDD3 /* SFChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401411BB74356007DCDD3 /* SFChatViewController.m */; settings = {ASSET_TAGS = (); }; };
-		8B0401541BB74356007DCDD3 /* SFLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401431BB74356007DCDD3 /* SFLocation.m */; settings = {ASSET_TAGS = (); }; };
-		8B0401551BB74356007DCDD3 /* SFLoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0401441BB74356007DCDD3 /* SFLoginView.xib */; settings = {ASSET_TAGS = (); }; };
-		8B0401561BB74356007DCDD3 /* SFLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401461BB74356007DCDD3 /* SFLoginViewController.m */; settings = {ASSET_TAGS = (); }; };
-		8B0401571BB74356007DCDD3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401481BB74356007DCDD3 /* ViewController.m */; settings = {ASSET_TAGS = (); }; };
-		8B3A9BC11BCB77ED002EE407 /* orbitron-black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8B3A9BBD1BCB77ED002EE407 /* orbitron-black.otf */; settings = {ASSET_TAGS = (); }; };
-		8B3A9BC21BCB77ED002EE407 /* orbitron-bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8B3A9BBE1BCB77ED002EE407 /* orbitron-bold.otf */; settings = {ASSET_TAGS = (); }; };
-		8B3A9BC31BCB77ED002EE407 /* orbitron-light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8B3A9BBF1BCB77ED002EE407 /* orbitron-light.otf */; settings = {ASSET_TAGS = (); }; };
-		8B3A9BC41BCB77ED002EE407 /* orbitron-medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8B3A9BC01BCB77ED002EE407 /* orbitron-medium.otf */; settings = {ASSET_TAGS = (); }; };
-		8B3A9BC61BCB7B21002EE407 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B0401381BB74356007DCDD3 /* Info.plist */; settings = {ASSET_TAGS = (); }; };
-		8B3A9BC91BCB9B5D002EE407 /* SFPubNubHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3A9BC81BCB9B5D002EE407 /* SFPubNubHandler.m */; settings = {ASSET_TAGS = (); }; };
-		8B3A9BCC1BCB9D3C002EE407 /* SFMessageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3A9BCB1BCB9D3C002EE407 /* SFMessageStore.m */; settings = {ASSET_TAGS = (); }; };
-		8B3A9BD01BCBB22A002EE407 /* SFTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3A9BCF1BCBB22A002EE407 /* SFTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
-		8B5A676C1BB749B1008796D2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B5A67681BB749B1008796D2 /* LaunchScreen.xib */; settings = {ASSET_TAGS = (); }; };
-		8B5A676D1BB749B1008796D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B5A676A1BB749B1008796D2 /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
+		8B0401491BB74356007DCDD3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401331BB74356007DCDD3 /* AppDelegate.m */; };
+		8B04014B1BB74356007DCDD3 /* DataManagement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401351BB74356007DCDD3 /* DataManagement.cpp */; };
+		8B04014C1BB74356007DCDD3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B0401371BB74356007DCDD3 /* Images.xcassets */; };
+		8B04014E1BB74356007DCDD3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401391BB74356007DCDD3 /* main.m */; };
+		8B04014F1BB74356007DCDD3 /* MapKitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B04013A1BB74356007DCDD3 /* MapKitView.xib */; };
+		8B0401501BB74356007DCDD3 /* SFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B04013C1BB74356007DCDD3 /* SFAppDelegate.m */; };
+		8B0401511BB74356007DCDD3 /* SFCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B04013E1BB74356007DCDD3 /* SFCallback.m */; };
+		8B0401521BB74356007DCDD3 /* SFChatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B04013F1BB74356007DCDD3 /* SFChatView.xib */; };
+		8B0401531BB74356007DCDD3 /* SFChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401411BB74356007DCDD3 /* SFChatViewController.m */; };
+		8B0401541BB74356007DCDD3 /* SFLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401431BB74356007DCDD3 /* SFLocation.m */; };
+		8B0401551BB74356007DCDD3 /* SFLoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0401441BB74356007DCDD3 /* SFLoginView.xib */; };
+		8B0401561BB74356007DCDD3 /* SFLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401461BB74356007DCDD3 /* SFLoginViewController.m */; };
+		8B0401571BB74356007DCDD3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0401481BB74356007DCDD3 /* ViewController.m */; };
+		8B21BC101BE4A0F900E8129F /* SFRegister.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B21BC0E1BE4A0F900E8129F /* SFRegister.m */; };
+		8B21BC111BE4A0F900E8129F /* SFRegister.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B21BC0F1BE4A0F900E8129F /* SFRegister.xib */; };
+		8B3A9BC11BCB77ED002EE407 /* orbitron-black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8B3A9BBD1BCB77ED002EE407 /* orbitron-black.otf */; };
+		8B3A9BC21BCB77ED002EE407 /* orbitron-bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8B3A9BBE1BCB77ED002EE407 /* orbitron-bold.otf */; };
+		8B3A9BC31BCB77ED002EE407 /* orbitron-light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8B3A9BBF1BCB77ED002EE407 /* orbitron-light.otf */; };
+		8B3A9BC41BCB77ED002EE407 /* orbitron-medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8B3A9BC01BCB77ED002EE407 /* orbitron-medium.otf */; };
+		8B3A9BC61BCB7B21002EE407 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B0401381BB74356007DCDD3 /* Info.plist */; };
+		8B3A9BC91BCB9B5D002EE407 /* SFPubNubHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3A9BC81BCB9B5D002EE407 /* SFPubNubHandler.m */; };
+		8B3A9BCC1BCB9D3C002EE407 /* SFMessageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3A9BCB1BCB9D3C002EE407 /* SFMessageStore.m */; };
+		8B3A9BD01BCBB22A002EE407 /* SFTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3A9BCF1BCBB22A002EE407 /* SFTableViewCell.m */; };
+		8B5A676C1BB749B1008796D2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B5A67681BB749B1008796D2 /* LaunchScreen.xib */; };
+		8B5A676D1BB749B1008796D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B5A676A1BB749B1008796D2 /* Main.storyboard */; };
 		8B82294F1BB28E46003C38F5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B82294E1BB28E46003C38F5 /* MapKit.framework */; };
-		8B988C811BBA88F800715BC7 /* SFMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B988C801BBA88F800715BC7 /* SFMessage.m */; settings = {ASSET_TAGS = (); }; };
-		8BFF00611BC38F06008D7DC6 /* SFCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFF00601BC38F06008D7DC6 /* SFCameraViewController.m */; settings = {ASSET_TAGS = (); }; };
-		8BFF00671BC3A445008D7DC6 /* AAPLCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFF00641BC3A445008D7DC6 /* AAPLCameraViewController.m */; settings = {ASSET_TAGS = (); }; };
-		8BFF00681BC3A445008D7DC6 /* AAPLPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFF00661BC3A445008D7DC6 /* AAPLPreviewView.m */; settings = {ASSET_TAGS = (); }; };
-		8BFF006A1BC3A4E9008D7DC6 /* AAPLCameraView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BFF00691BC3A4E9008D7DC6 /* AAPLCameraView.xib */; settings = {ASSET_TAGS = (); }; };
-		D814A0171BBBBE0400B6671A /* cartman.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D814A0161BBBBE0400B6671A /* cartman.jpg */; settings = {ASSET_TAGS = (); }; };
-		D8D37A691BCE5E5900B57BEE /* SFImageTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D37A681BCE5E5900B57BEE /* SFImageTableCell.m */; settings = {ASSET_TAGS = (); }; };
-		D8D50D1B1BBBD7330066C125 /* Topic Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D8D50D1A1BBBD7330066C125 /* Topic Filled-50.png */; settings = {ASSET_TAGS = (); }; };
-		D8D50D1D1BBBDB500066C125 /* ios7_camera_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8D50D1C1BBBDB500066C125 /* ios7_camera_logo.jpg */; settings = {ASSET_TAGS = (); }; };
-		D8D564271BC24FB6006ED789 /* AppDesign in Resources */ = {isa = PBXBuildFile; fileRef = D8D564261BC24FB6006ED789 /* AppDesign */; settings = {ASSET_TAGS = (); }; };
-		D8D564291BC25530006ED789 /* AppImages in Resources */ = {isa = PBXBuildFile; fileRef = D8D564281BC25530006ED789 /* AppImages */; settings = {ASSET_TAGS = (); }; };
+		8B988C811BBA88F800715BC7 /* SFMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B988C801BBA88F800715BC7 /* SFMessage.m */; };
+		8BFF00611BC38F06008D7DC6 /* SFCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFF00601BC38F06008D7DC6 /* SFCameraViewController.m */; };
+		8BFF00671BC3A445008D7DC6 /* AAPLCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFF00641BC3A445008D7DC6 /* AAPLCameraViewController.m */; };
+		8BFF00681BC3A445008D7DC6 /* AAPLPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFF00661BC3A445008D7DC6 /* AAPLPreviewView.m */; };
+		8BFF006A1BC3A4E9008D7DC6 /* AAPLCameraView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BFF00691BC3A4E9008D7DC6 /* AAPLCameraView.xib */; };
+		D814A0171BBBBE0400B6671A /* cartman.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D814A0161BBBBE0400B6671A /* cartman.jpg */; };
+		D8D37A691BCE5E5900B57BEE /* SFImageTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D37A681BCE5E5900B57BEE /* SFImageTableCell.m */; };
+		D8D50D1B1BBBD7330066C125 /* Topic Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D8D50D1A1BBBD7330066C125 /* Topic Filled-50.png */; };
+		D8D50D1D1BBBDB500066C125 /* ios7_camera_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8D50D1C1BBBDB500066C125 /* ios7_camera_logo.jpg */; };
+		D8D564271BC24FB6006ED789 /* AppDesign in Resources */ = {isa = PBXBuildFile; fileRef = D8D564261BC24FB6006ED789 /* AppDesign */; };
+		D8D564291BC25530006ED789 /* AppImages in Resources */ = {isa = PBXBuildFile; fileRef = D8D564281BC25530006ED789 /* AppImages */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +73,9 @@
 		8B0401461BB74356007DCDD3 /* SFLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFLoginViewController.m; path = Source/SFLoginViewController.m; sourceTree = "<group>"; };
 		8B0401471BB74356007DCDD3 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = Source/ViewController.h; sourceTree = "<group>"; };
 		8B0401481BB74356007DCDD3 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = Source/ViewController.m; sourceTree = "<group>"; };
+		8B21BC0D1BE4A0F900E8129F /* SFRegister.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFRegister.h; sourceTree = "<group>"; };
+		8B21BC0E1BE4A0F900E8129F /* SFRegister.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFRegister.m; sourceTree = "<group>"; };
+		8B21BC0F1BE4A0F900E8129F /* SFRegister.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SFRegister.xib; sourceTree = "<group>"; };
 		8B3A9BBD1BCB77ED002EE407 /* orbitron-black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "orbitron-black.otf"; path = "Orbitron/orbitron-black.otf"; sourceTree = "<group>"; };
 		8B3A9BBE1BCB77ED002EE407 /* orbitron-bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "orbitron-bold.otf"; path = "Orbitron/orbitron-bold.otf"; sourceTree = "<group>"; };
 		8B3A9BBF1BCB77ED002EE407 /* orbitron-light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "orbitron-light.otf"; path = "Orbitron/orbitron-light.otf"; sourceTree = "<group>"; };
@@ -190,6 +195,9 @@
 				8B0401431BB74356007DCDD3 /* SFLocation.m */,
 				8B0401441BB74356007DCDD3 /* SFLoginView.xib */,
 				8B0401451BB74356007DCDD3 /* SFLoginViewController.h */,
+				8B21BC0D1BE4A0F900E8129F /* SFRegister.h */,
+				8B21BC0E1BE4A0F900E8129F /* SFRegister.m */,
+				8B21BC0F1BE4A0F900E8129F /* SFRegister.xib */,
 				8B0401461BB74356007DCDD3 /* SFLoginViewController.m */,
 				8B0401471BB74356007DCDD3 /* ViewController.h */,
 				8B0401481BB74356007DCDD3 /* ViewController.m */,
@@ -311,6 +319,7 @@
 			files = (
 				8B0401551BB74356007DCDD3 /* SFLoginView.xib in Resources */,
 				8B04014C1BB74356007DCDD3 /* Images.xcassets in Resources */,
+				8B21BC111BE4A0F900E8129F /* SFRegister.xib in Resources */,
 				8B3A9BC11BCB77ED002EE407 /* orbitron-black.otf in Resources */,
 				8B5A676D1BB749B1008796D2 /* Main.storyboard in Resources */,
 				D814A0171BBBBE0400B6671A /* cartman.jpg in Resources */,
@@ -390,6 +399,7 @@
 				8BFF00681BC3A445008D7DC6 /* AAPLPreviewView.m in Sources */,
 				8BFF00611BC38F06008D7DC6 /* SFCameraViewController.m in Sources */,
 				8B0401511BB74356007DCDD3 /* SFCallback.m in Sources */,
+				8B21BC101BE4A0F900E8129F /* SFRegister.m in Sources */,
 				8B0401491BB74356007DCDD3 /* AppDelegate.m in Sources */,
 				8B3A9BCC1BCB9D3C002EE407 /* SFMessageStore.m in Sources */,
 				8B0401541BB74356007DCDD3 /* SFLocation.m in Sources */,

@@ -49,6 +49,44 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
    // [_mainPubNubHandler.cvc reloadTableView];
     
 }
+-(void) appChangeToRegisterState{
+    SFRegister * theReg = [[SFRegister alloc]init];
+    theReg.delegate = self;
+    
+    theReg.modalPresentationStyle = UIModalPresentationFullScreen;
+    
+   
+   // _window.rootViewController = theReg;
+    //UIViewController * VC = _navigator.view.window.rootViewController;
+    //[VC presentViewController:theReg animated:YES completion:nil];
+    [_navigator pushViewController:theReg animated:YES];
+    
+                                         
+}
+-(void) appDoneRegistering: (id)viewCont :(NSString *) userName :(NSString *) passWord{
+    
+    [viewCont dismissViewControllerAnimated:YES completion:NULL];
+        
+        
+        _mainMessageStore = [[SFMessageStore alloc]init];
+        _mainPubNubHandler = [[SFPubNubHandler alloc]init];
+        _mainPubNubHandler.messageStore = _mainMessageStore;
+        self.userName = [[NSString alloc]init];
+        self.passWord = [[NSString alloc]init];
+        self.userName = userName;
+        self.passWord = passWord;
+        
+        SFChatViewController * chatViewControl = [[SFChatViewController alloc]initWithName:self.userName];
+        _mainPubNubHandler.cvc = chatViewControl;
+        chatViewControl.myStore = _mainMessageStore;
+        chatViewControl.pubNubHandler = _mainPubNubHandler;
+        // [chatViewControl setUserName:userName];
+        chatViewControl.modalPresentationStyle = UIModalPresentationFullScreen;
+        [_navigator presentViewController:chatViewControl animated:YES completion:NULL];
+        //[_navigator pushViewController:chatViewControl animated:YES];
+    
+   
+}
 -(void)appFinishedLoadingScreen:(SFLoginViewController *)viewController :(NSString *) userName : (NSString *) password{
     NSLog(@"Coolio\n");
     

@@ -12,6 +12,9 @@
 @protocol SFCallBackDelegate <NSObject>
 
 - (void)appFinishedLoadingScreen:(SFLoginViewController *) viewController :(NSString *) userName : (NSString*) password;
+-(void) appChangeToRegisterState;
+
+-(void) appDoneRegistering: (id) viewCont :(NSString *) userName :(NSString *) passWord;
 
 
 @end

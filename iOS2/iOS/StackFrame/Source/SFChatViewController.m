@@ -56,6 +56,8 @@
     // end
     _screenRect = [[UIScreen mainScreen]bounds];
 
+    _tableView.transform = CGAffineTransformMakeScale (-1,-1);
+
     NSString * magnification;
     if(_screenRect.size.width == 375){
         magnification = @".png";
@@ -188,8 +190,7 @@ NSArray *cells = [self.tableView visibleCells];
             break;
     }
     // This makes it insert at the bottom
-    //_tableView.transform = CGAffineTransformMakeScale (-1,-1);
-    
+
     
     //_stackFrameTopBar.bounds = CGRectMake(0, 0, 250, 127);
     
@@ -432,12 +433,63 @@ NSArray *cells = [self.tableView visibleCells];
 
 #pragma mark - PubNubCub
 -(void)publish{
+    //NSString * chatRoomID = @"AZ";
+    
+   // BOOL isExistingLocation = location._id != nil;
+    //NSURL* url = isExistingLocation ? [NSURL URLWithString:[locations stringByAppendingPathComponent:location._id]] :
+    
+    
+    // BEGIN
+    
+
+
+    
+    
+    // END
+    
+    @try{
+    NSURL * url = [NSURL URLWithString:@"http://localhost:3000/post/AZ"]; //1
+    
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod =  @"POST";//2
+    NSDictionary * dict;;
+    dict = [NSDictionary dictionaryWithObjectsAndKeys:self.userName,@"user",self.texField.text,@"cmessage", nil];
+        
+        [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"]; //4
+
+    NSData* data = [NSJSONSerialization dataWithJSONObject:dict options:0 error:NULL]; //3
+    request.HTTPBody = data;
+    
+   // [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"]; //4
+    
+    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
+    
+    NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) { //5
+        if (!error) {
+            NSArray* responseArray = @[[NSJSONSerialization JSONObjectWithData:data options:0 error:NULL]];
+            
+            
+            //[self parseAndAddLocations:responseArray toArray:self.objects];
+        }
+    }];
+    [dataTask resume];
+    
+    
+    
     if(_pubNubHandler != nil){
         NSDictionary * dict = [_pubNubHandler createDictionaryWith:_userName withAction:ACTION_USER_POSTED_MESSAGE withData:_texField.text];
         
         [_pubNubHandler publish:dict];
 }
-  
+    }@catch(NSException * e){
+        NSLog(@"Exception caught");
+        NSLog(@"%@",e);
+        
+    }@finally{
+        
+        
+    }
     _texField.text = @"";
 
 }
