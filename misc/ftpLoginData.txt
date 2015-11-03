@@ -1,0 +1,13 @@
+How to log into server:
+
+Logging into OpenShift servers requires the use of a private
+key. To use this key:
+
+Mac/Unix:	Use this command:	"ssh -i [KEY LOCATION]/PuttyPrivateSSHKey.ppk 56202eea0c1e66ed60000088@nodejs-stackframe.rhcloud.com"
+
+Windows:	Putty (same command):	https://developers.openshift.com/en/managing-remote-connection.html
+
+URL:		nodejs-stackframe.rhcloud.com
+Username:	56202eea0c1e66ed60000088
+Password:	[none]
+Folder to use:	Just not root

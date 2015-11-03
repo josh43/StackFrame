@@ -1,5 +1,6 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -9,37 +10,31 @@
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/chatView"
         android:layout_centerHorizontal="true"
         android:background="@android:color/background_light"
-        android:stackFromBottom="true" />
+        android:stackFromBottom="true"
+        android:layout_weight="9" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="100px"
-        android:layout_below="@+id/chatView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:visibility="gone">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/message"
-            android:layout_below="@+id/chatView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_weight="9" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/button"
-            android:layout_below="@+id/chatView"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:text="Send"
+            android:id="@+id/send"
+            android:layout_weight="1" />
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
