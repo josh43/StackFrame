@@ -1,0 +1,3 @@
+SSH sessions, require a public key. The -i command specifies this key:
+
+"ssh -i [KEY LOCATION]/PuttyPrivateSSHKey.ppk 56202eea0c1e66ed60000088@nodejs-stackframe.rhcloud.com"

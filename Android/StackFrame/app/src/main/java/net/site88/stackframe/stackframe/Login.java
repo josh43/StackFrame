@@ -25,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 
 import net.site88.stackframe.stackframe.ChatActivity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -37,6 +38,10 @@ import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+
 
 public class Login extends AppCompatActivity {
 
@@ -44,6 +49,7 @@ public class Login extends AppCompatActivity {
     Button login;
     EditText username;
     EditText password;
+    Socket socket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,73 +66,35 @@ public class Login extends AppCompatActivity {
             title.setTypeface(Orbitron);
         }
 
+        try {
+            socket = IO.socket("http://nodejs-stackframe.nhcloud.com");
+        } catch (Exception e) {}
+
+
+        socket.on("register", socketRegister());
+        socket.on("message", socketRegister());
+        socket.connect();
+        JSONObject registerjson = new JSONObject();
+        try {
+            registerjson.put("username", username.getText().toString());
+            registerjson.put("password", password.getText().toString());
+            registerjson.put("geoloc", "location");
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(Login.this, "Error putting together registration data", Toast.LENGTH_SHORT).show();
+            Log.e("StackFrame", e.getStackTrace().toString());
+            e.printStackTrace();
+        }
+        socket.emit("register", registerjson);
+
         login.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 //TODO: Add logic for some type of animation
 
-                //TODO: Add logic for an HTTP request to HTTP://stackframe.site88.net/authenticate.php
-                // Instantiate the RequestQueue
-// Instantiate the RequestQueue.
-                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                String url = "HTTP://stackframe.site88.net/authenticate.php";
 
-// Request a string response from the provided URL.
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                // Display the first 500 characters of the response string.
-                                try
-                                {
-                                    JSONObject auth = new JSONObject(response);
-                                    Log.v("Stackframe", response);
-                                    if(auth.getInt("success") == 1)
-                                    {
-                                        Toast.makeText(Login.this, "Successfully logged in!", Toast.LENGTH_SHORT).show();
-
-                                        //TODO: Parse and save login info for future use!!
-
-                                        Intent intent = new Intent(Login.this, ChatActivity.class);
-                                        startActivity(intent);
-                                    }
-                                    else
-                                    {
-                                        Toast.makeText(Login.this, "Invalid Login Info:", Toast.LENGTH_SHORT).show();
-                                        Toast.makeText(Login.this, username.getText().toString(), Toast.LENGTH_SHORT).show();
-                                        username.setText("");
-                                        password.setText("");
-                                    }
-                                }
-                                catch(Exception e)
-                                {
-                                    Toast.makeText(Login.this, "Unable to read data received from network! :(", Toast.LENGTH_SHORT).show();
-                                }
-
-                                //Toast.makeText(Login.this, "Response is: ", Toast.LENGTH_SHORT).show();
-
-
-
-                                //mTextView.setText("Response is: "+ response.substring(0,500));
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Login.this, "Unable to connect...", Toast.LENGTH_SHORT).show();
-                        //mTextView.setText("That didn't work!");
-                    }
-                })
-                //@Override
-                {protected Map<String, String> getParams () {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("username", username.getText().toString());
-                        params.put("password", password.getText().toString());
-                        return params;
-                    }
-                };
-// Add the request to the RequestQueue.
-                queue.add(stringRequest);
                 Toast.makeText(Login.this, "Attempting to log in...", Toast.LENGTH_SHORT).show();
             }
         });
@@ -153,7 +121,34 @@ public class Login extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private Emitter.Listener socketRegister()
+    {
+        Emitter.Listener onNewMessage = new Emitter.Listener() {
+            @Override
+            public void call(final Object... args) {
+               Login.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        JSONObject data = (JSONObject) args[0];
+                        String token;
+                        String serverid;
+                        try {
+                            token = data.getString("token");
+                            serverid = data.getString("serverid");
+                            Toast.makeText(Login.this, "Received token '" + token + "' and serverid '" + serverid + "'.", Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            return;
+                        }
+                    }
+                });
+            }
+        };
+        return onNewMessage;
+    }
 }
+
+
 
 
 

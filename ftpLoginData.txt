@@ -1,4 +1,0 @@
-URL:		stackframe.site88.net
-Username:	a5828192
-Password:	W1ldcats
-Folder to use:	/public_html
