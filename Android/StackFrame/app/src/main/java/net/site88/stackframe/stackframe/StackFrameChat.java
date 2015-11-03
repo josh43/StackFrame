@@ -111,6 +111,10 @@ public class StackFrameChat extends Service
                     }
                     Toast.makeText(StackFrameChat.this, "Got token: " + token, Toast.LENGTH_SHORT).show();
 
+                    Intent chat = new Intent(StackFrameChat.this, ChatActivity.class);
+                    chat.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(chat);
+
                 }
             });
         }
