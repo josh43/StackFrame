@@ -11,7 +11,9 @@
 #import "SFChatViewController.h"
 #import "SFCallback.h"
 #import "SFMessageStore.h"
-#import "SFPubNubHandler.h";
+#import "SFPubNubHandler.h"//roller.h"
+#import "SFRegister.h"
+
 @interface SFAppDelegate : UIResponder <UIApplicationDelegate, SFCallBackDelegate>
 @property(nonatomic,strong) UIWindow * window;
 @property(nonatomic,strong) UINavigationController * navigator;

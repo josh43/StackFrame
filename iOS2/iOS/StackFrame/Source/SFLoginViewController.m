@@ -24,7 +24,7 @@ const int MAX_PASSWORD_LENGTH = 16;
         NSLog(@"Error loading the view controller beeech\n");
     }
     if(_loginView){
-    self.view = self.loginView;
+   // self.view = self.loginView;
     }
         
     
@@ -49,6 +49,8 @@ const int MAX_PASSWORD_LENGTH = 16;
     return true;
 }
 - (IBAction)createProfile:(id)sender {
+    NSLog(@"I was pressed\n");
+    [self.delegate appChangeToRegisterState];
 }
 
 #pragma GCC diagnostic push
@@ -61,69 +63,77 @@ const int MAX_PASSWORD_LENGTH = 16;
             
             [self alertStatus:@"Please enter Email and Password" :@"Sign in Failed!" :0];
             
-        } else {
-            NSString *post =[[NSString alloc] initWithFormat:@"username=%@&password=%@",[self.userName text],[self.passWord text]];
-            NSLog(@"PostData: %@",post);
+        }else {
             
-            NSURL *url=[NSURL URLWithString:@"http://stackframe.site88.net/authenticate.php"];
+    
+            NSString * kBaseURL = [NSString stringWithFormat:@"http://localhost:3000/login/%@/%@",self.userName.text,self.passWord.text];
+    
+    
+    NSURL* url = [NSURL URLWithString:kBaseURL];
+    
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"GET"; //2
+    
+     //3
+    
+    
+    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
+    
             
-            NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
             
-            NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
-            
-            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-            [request setURL:url];
-            [request setHTTPMethod:@"POST"];
-            [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
-            [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-            [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-            [request setHTTPBody:postData];
-            
-            //[NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-            
-            NSError *error = [[NSError alloc] init];
-            NSHTTPURLResponse *response = nil;
-            NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-            
-            NSLog(@"Response code: %ld", (long)[response statusCode]);
-            
-            if ([response statusCode] >= 200 && [response statusCode] < 500)
-            {
-                NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
-                NSLog(@"Response ==> %@", responseData);
-                
-                NSError *error = nil;
-                NSDictionary *jsonData = [NSJSONSerialization
-                                          JSONObjectWithData:urlData
-                                          options:NSJSONReadingMutableContainers
-                                          error:&error];
-                
-                success = [jsonData[@"success"] integerValue];
-                NSLog(@"Success: %ld",(long)success);
-                
-                if(success == 1)
-                {
-                    NSLog(@"Login SUCCESS");
-                } else {
+    NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) { //5
+        NSLog(@"Handler being called\n");
+        if (!error) {
+            NSDictionary* responseDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+            @try {
+                if(responseDict[@"Error"]){
+                    NSString * em = responseDict[@"Error"];
+                    if([em isKindOfClass:[NSString class]])
+                        NSLog(@"%@",em);
                     
-                    NSString *error_msg = (NSString *) jsonData[@"error_message"];
-                    [self alertStatus:error_msg :@"Sign in Failed!" :0];
+                    
+                }
+                if(responseDict[@"ObjectID"]){
+                    if([responseDict[@"ObjectID"] isKindOfClass:[NSString class]]){
+                        _myObjectID = responseDict[@"ObjectID"];
+                        NSLog(@"Got the objectID");
+                        self.doneRegistering = YES;
+                        self.uName= [[NSString alloc]initWithString:self.userName.text];
+                        self.pWord = [[NSString alloc ]initWithString:self.passWord.text];
+                        [self dismissViewControllerAnimated:YES completion:NULL];
+                        [self.delegate appDoneRegistering:self :self.uName :self.pWord];
+
+                       
+                    }else
+                        NSLog(@"Error converting format string\n");
+                    
                 }
                 
-            } else {
-                //if (error) NSLog(@"Error: %@", error);
-                [self alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
             }
+            @catch (NSException *exception) {
+                
+            }
+            @finally {
+              
+            }
+            
         }
-    }
-    @catch (NSException * e) {
-        NSLog(@"Exception: %@", e);
-        [self alertStatus:@"Sign in Failed." :@"Error!" :0];
-    }
-    if (success) {
-        [_delegate appFinishedLoadingScreen:self :_userName.text :_passWord.text];
-
-    }
+    }];
+   // [dataTask resume];
+    
+        }}
+    @catch(NSException * hoopla){
+            
+        }
+    @finally {
+        
+        NSLog(@"Power overwhelming\n");
+        }
+    
+  
+    
+    
 }
 #pragma GCC diagnostic pop
 

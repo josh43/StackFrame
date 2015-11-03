@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SFLoginViewController">
@@ -12,7 +12,7 @@
                 <outlet property="loginView" destination="iN0-l3-epB" id="tmI-dp-0r5"/>
                 <outlet property="passWord" destination="yoh-tg-Mg4" id="qil-fY-Fev"/>
                 <outlet property="userName" destination="TCq-Od-qJj" id="mOw-uf-Um0"/>
-                <outlet property="view" destination="iN0-l3-epB" id="LtM-oW-AfJ"/>
+                <outlet property="view" destination="iN0-l3-epB" id="1hd-wZ-ETq"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
