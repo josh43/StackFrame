@@ -67,18 +67,21 @@ public class Login extends AppCompatActivity {
             title.setTypeface(Orbitron);
         }
 
+        loginService = new Intent(Login.this, StackFrameChat.class);
+        loginService.putExtra("action", "startup");
+        startService(loginService);
+
 
         login.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 //TODO: Add logic for some type of animation
-                Intent loginService = new Intent(Login.this, StackFrameChat.class);
-                loginService.putExtra("username", username.getText());
-                loginService.putExtra("passowrd", password.getText());
+                loginService.putExtra("action", "register");
+                loginService.putExtra("username", username.getText().toString());
+                loginService.putExtra("passowrd", password.getText().toString());
                 loginService.putExtra("geoloc", "location");
                 startService(loginService);
-
                 Toast.makeText(Login.this, "Attempting to log in...", Toast.LENGTH_SHORT).show();
             }
         });
@@ -109,6 +112,7 @@ public class Login extends AppCompatActivity {
     @Override
     public void onDestroy()
     {
+        super.onDestroy();
         stopService(loginService);
     }
 }
