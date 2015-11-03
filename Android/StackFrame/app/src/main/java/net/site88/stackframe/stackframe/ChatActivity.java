@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import com.github.nkzawa.emitter.Emitter;
 import com.pubnub.api.*;
 import org.json.*;
 
@@ -63,10 +64,6 @@ public class ChatActivity extends ActionBarActivity {
                 chat );
 
         chatView.setAdapter(arrayAdapter);
-
-
-
-
     }
 
     @Override
