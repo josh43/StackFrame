@@ -1,6 +1,11 @@
 package net.site88.stackframe.stackframe;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Looper;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +34,7 @@ public class ChatActivity extends ActionBarActivity {
     EditText message;
     Button send;
     boolean newMessage = false;
+    BroadcastReceiver mMessageReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +70,17 @@ public class ChatActivity extends ActionBarActivity {
                 chat );
 
         chatView.setAdapter(arrayAdapter);
+
+        BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // Get extra data included in the Intent
+                String message = intent.getStringExtra("message");
+                Log.d("receiver", "Got message: " + message);
+                Toast.makeText(ChatActivity.this, "Got a message: " + message, Toast.LENGTH_SHORT).show();
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("message"));
     }
 
     @Override
@@ -86,5 +103,11 @@ public class ChatActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 }

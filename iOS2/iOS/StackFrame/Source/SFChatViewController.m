@@ -8,6 +8,7 @@
 
 #import "SFChatViewController.h"
 #import "SFTableViewCell.h"
+#import "StackFrame-Swift.h"
 @interface SFChatViewController ()
 
 @end
@@ -19,6 +20,7 @@
 
 
 -(id)initWithName:(NSString *)theName{
+    
     self = [super init];
     if(self){
         _userName = [[NSString alloc]init];

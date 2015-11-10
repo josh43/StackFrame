@@ -3,8 +3,7 @@
     package="net.site88.stackframe.stackframe" >
 
     <uses-permission
-        android:name="android.permission.INTERNET"
-        android:maxSdkVersion="22" />
+        android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
