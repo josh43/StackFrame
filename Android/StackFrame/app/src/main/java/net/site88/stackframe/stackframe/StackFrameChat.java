@@ -4,6 +4,7 @@ import android.app.Service;
 import android.os.IBinder;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 import android.os.Handler;
@@ -36,8 +37,12 @@ public class StackFrameChat extends Service
     String geoloc;
     Handler handler;
 
+    Intent chat;
+
     String token;
     String serverid;
+
+    LocalBroadcastManager broadcast;
 
     /** Called when the service is being created. */
     @Override
@@ -48,8 +53,6 @@ public class StackFrameChat extends Service
     /** The service is starting, due to a call to startService() */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        Toast.makeText(this, "Running chat service", Toast.LENGTH_SHORT).show();
 
         Bundle extra = intent.getExtras();
 
@@ -69,8 +72,8 @@ public class StackFrameChat extends Service
             password = extra.getString("password");
             geoloc = extra.getString("geoloc");
 
-            socket.on("register", onNewMessage);
-            socket.on("message", receiveMessage());
+            socket.on("register", onRegister);
+            socket.on("message", onMessage);
             socket.connect();
 
             JSONObject registerjson = new JSONObject();
@@ -93,7 +96,7 @@ public class StackFrameChat extends Service
         return mStartMode;
     }
 
-    private Emitter.Listener onNewMessage = new Emitter.Listener() {
+    private Emitter.Listener onRegister = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
              handler.post(new Runnable() {
@@ -111,10 +114,32 @@ public class StackFrameChat extends Service
                     }
                     Toast.makeText(StackFrameChat.this, "Got token: " + token, Toast.LENGTH_SHORT).show();
 
-                    Intent chat = new Intent(StackFrameChat.this, ChatActivity.class);
+                    chat = new Intent(StackFrameChat.this, ChatActivity.class);
                     chat.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(chat);
 
+                }
+            });
+        }
+    };
+
+    private Emitter.Listener onMessage = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject data = (JSONObject) args[0];
+                    String username;
+                    String text;
+                    try {
+                        username = data.getString("username");
+                        text = data.getString("text");
+                    } catch (JSONException e) {
+                        Toast.makeText(StackFrameChat.this, "Something wrong with the registration I got...", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    //Toast.makeText(StackFrameChat.this, "Got message: " + text, Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -136,6 +161,7 @@ public class StackFrameChat extends Service
     @Override
     public void onDestroy() {
         socket.disconnect();
+
     }
 
     @Override
@@ -143,55 +169,10 @@ public class StackFrameChat extends Service
         return null;
     }
 
-    private Emitter.Listener socketRegister()
-    {
-        Emitter.Listener onNewMessage = new Emitter.Listener() {
-            @Override
-            public void call(final Object... args) {
-               new Runnable() {
-                   @Override
-                   public void run() {
-                       JSONObject data = (JSONObject) args[0];
-                       String token;
-                       String serverid;
-                       try {
-                           token = data.getString("token");
-                           serverid = data.getString("serverid");
-                           Toast.makeText(StackFrameChat.this, "Received token '" + token + "' and serverid '" + serverid + "'.", Toast.LENGTH_SHORT).show();
-
-                           Intent chatroom = new Intent(StackFrameChat.this, ChatActivity.class);
-                       } catch (JSONException e) {
-                           return;
-                       }
-                   }
-               };
-            }
-        };
-        return onNewMessage;
-    }
-
-    private Emitter.Listener receiveMessage()
-    {
-        Emitter.Listener onNewMessage = new Emitter.Listener() {
-            @Override
-            public void call(final Object... args) {
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        JSONObject data = (JSONObject) args[0];
-                        String user;
-                        String text;
-                        try {
-                            user = data.getString("username");
-                            text = data.getString("text");
-                            Toast.makeText(StackFrameChat.this, "Received message [" + user + "]: " + text, Toast.LENGTH_SHORT).show();
-                        } catch (JSONException e) {
-                            return;
-                        }
-                    }
-                };
-            }
-        };
-        return onNewMessage;
+    public void sendResult(String message) {
+        Intent intent = new Intent("message");
+        // You can also include some extra data.
+        intent.putExtra("message", message);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }
