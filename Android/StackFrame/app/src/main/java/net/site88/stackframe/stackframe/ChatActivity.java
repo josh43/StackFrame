@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +36,7 @@ public class ChatActivity extends ActionBarActivity {
     Button send;
     boolean newMessage = false;
     BroadcastReceiver mMessageReceiver;
+    LocalBroadcastManager broadcast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,6 @@ public class ChatActivity extends ActionBarActivity {
 
         chatView = (ListView) findViewById(R.id.chatView);
 
-        final Pubnub pubnub = new Pubnub("pub-c-1a6a9ba9-b6b2-45aa-8dbe-7f6b398fdf14", "sub-c-b5dbfc4e-6252-11e5-8a6a-02ee2ddab7fe");
         chat.add("Welcome to StackFrame!");
 
         message = (EditText) findViewById(R.id.message);
@@ -52,15 +53,9 @@ public class ChatActivity extends ActionBarActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JSONObject data = new JSONObject();
-
-                try {
-                    data.put("text", message.getText());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                pubnub.publish("demo_tutorial", data, new Callback() {});
+                String output =  message.getText().toString();
+                message.setText("");
+                sendResult(output);
             }
         });
 
@@ -76,11 +71,18 @@ public class ChatActivity extends ActionBarActivity {
             public void onReceive(Context context, Intent intent) {
                 // Get extra data included in the Intent
                 String message = intent.getStringExtra("message");
-                Log.d("receiver", "Got message: " + message);
-                Toast.makeText(ChatActivity.this, "Got a message: " + message, Toast.LENGTH_SHORT).show();
+                try {
+                    JSONObject data = new JSONObject(message);
+                    chat.add(data.getString("username") + ": " + data.getString("text"));
+                    arrayAdapter.notifyDataSetChanged();
+                } catch (Exception e) {
+                    Toast.makeText(ChatActivity.this, "Something wrong with the message data", Toast.LENGTH_SHORT).show();
+                }
+                Log.d("StackFrame-UI", "Got message: " + message);
+                //Toast.makeText(ChatActivity.this, "Got a message: " + message, Toast.LENGTH_SHORT).show();
             }
         };
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("message"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("incomingMessage"));
     }
 
     @Override
@@ -109,5 +111,12 @@ public class ChatActivity extends ActionBarActivity {
     protected void onDestroy()
     {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+    }
+
+    public void sendResult(String message) {
+        Intent intent = new Intent("outgoingMessage");
+        // You can also include some extra data.
+        intent.putExtra("message", message);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }

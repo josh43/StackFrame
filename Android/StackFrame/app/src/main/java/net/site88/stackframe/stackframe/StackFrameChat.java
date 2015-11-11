@@ -1,6 +1,9 @@
 package net.site88.stackframe.stackframe;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
 import android.os.IBinder;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +18,9 @@ import com.github.nkzawa.socketio.client.Socket;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Date;
+import java.util.Stack;
 
 /**
  * Created by Desone on 11/2/2015.
@@ -43,6 +49,7 @@ public class StackFrameChat extends Service
     String serverid;
 
     LocalBroadcastManager broadcast;
+    BroadcastReceiver mMessageReceiver;
 
     /** Called when the service is being created. */
     @Override
@@ -93,6 +100,30 @@ public class StackFrameChat extends Service
             Toast.makeText(this, "Attempting to start service with invalid action: " + extra.getString("action"), Toast.LENGTH_SHORT).show();
         }
 
+        BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // Get extra data included in the Intent
+                String message = intent.getStringExtra("message");
+                Log.d("StackFrame-Backend", "Got message: " + message);
+                JSONObject output = new JSONObject();
+                try {
+                    output.put("username", username);
+                    output.put("token", token);
+                    output.put("type", "text");
+                    output.put("date", new Date().toString());
+                    output.put("text", message);
+                    output.put("serverid", serverid);
+                } catch (Exception e)
+                {
+                    Toast.makeText(StackFrameChat.this, "Unable to construct message", Toast.LENGTH_SHORT).show();
+                }
+                socket.emit("message", output);
+                //Toast.makeText(ChatActivity.this, "Got a message: " + message, Toast.LENGTH_SHORT).show();
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("outgoingMessage"));
+
         return mStartMode;
     }
 
@@ -104,9 +135,9 @@ public class StackFrameChat extends Service
                 public void run() {
                     JSONObject data = (JSONObject) args[0];
                     //String username;
-                    String token;
+
                     try {
-                        //username = data.getString("username");
+                        serverid = data.getString("serverid");
                         token = data.getString("token");
                     } catch (JSONException e) {
                         Toast.makeText(StackFrameChat.this, "Something wrong with the registration I got...", Toast.LENGTH_SHORT).show();
@@ -131,15 +162,16 @@ public class StackFrameChat extends Service
                 public void run() {
                     JSONObject data = (JSONObject) args[0];
                     String username;
-                    String text;
+                    String text = "";
                     try {
                         username = data.getString("username");
                         text = data.getString("text");
                     } catch (JSONException e) {
-                        Toast.makeText(StackFrameChat.this, "Something wrong with the registration I got...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(StackFrameChat.this, "Something wrong with the message I got...", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     //Toast.makeText(StackFrameChat.this, "Got message: " + text, Toast.LENGTH_SHORT).show();
+                    sendResult(data);
                 }
             });
         }
@@ -169,10 +201,10 @@ public class StackFrameChat extends Service
         return null;
     }
 
-    public void sendResult(String message) {
-        Intent intent = new Intent("message");
+    public void sendResult(JSONObject message) {
+        Intent intent = new Intent("incomingMessage");
         // You can also include some extra data.
-        intent.putExtra("message", message);
+        intent.putExtra("message", message.toString());
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }
