@@ -111,7 +111,7 @@ public class StackFrameChat extends Service
                     output.put("username", username);
                     output.put("token", token);
                     output.put("type", "text");
-                    output.put("date", new Date().toString());
+                    output.put("date", new Date().getTime());
                     output.put("text", message);
                     output.put("serverid", serverid);
                 } catch (Exception e)

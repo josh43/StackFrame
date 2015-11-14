@@ -57,6 +57,8 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_enter);
+
         title = (TextView) findViewById(R.id.title);
         login = (Button) findViewById(R.id.login);
         username = (EditText) findViewById(R.id.username);
@@ -114,6 +116,7 @@ public class Login extends AppCompatActivity {
     {
         super.onDestroy();
         stopService(loginService);
+        overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_shrink_fade_out_from_bottom);
     }
 }
 

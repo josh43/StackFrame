@@ -29,8 +29,9 @@ import org.json.*;
 
 public class ChatActivity extends ActionBarActivity {
 
-    ArrayList<String> chat = new ArrayList<String>();
-    ArrayAdapter arrayAdapter;
+    ArrayList<Message> chat = new ArrayList<Message>();
+    //ArrayAdapter arrayAdapter;
+    BubbleAdapter arrayAdapter;
     ListView chatView;
     EditText message;
     Button send;
@@ -45,7 +46,7 @@ public class ChatActivity extends ActionBarActivity {
 
         chatView = (ListView) findViewById(R.id.chatView);
 
-        chat.add("Welcome to StackFrame!");
+        chat.add(new Message("Application", "None", "text", "none", "Welcome to StackFrame!", "0"));
 
         message = (EditText) findViewById(R.id.message);
         send = (Button) findViewById(R.id.send);
@@ -59,10 +60,11 @@ public class ChatActivity extends ActionBarActivity {
             }
         });
 
-        arrayAdapter = new ArrayAdapter<String>(
+        arrayAdapter = new BubbleAdapter(this, chat);
+                /*= new ArrayAdapter<String>(
                 ChatActivity.this,
-                android.R.layout.simple_list_item_1,
-                chat );
+                android.R.layout.simple_expandable_list_item_1,
+                chat );*/
 
         chatView.setAdapter(arrayAdapter);
 
@@ -73,7 +75,7 @@ public class ChatActivity extends ActionBarActivity {
                 String message = intent.getStringExtra("message");
                 try {
                     JSONObject data = new JSONObject(message);
-                    chat.add(data.getString("username") + ": " + data.getString("text"));
+                    chat.add(new Message(data.getString("username"), data.getString("token"), data.getString("type"), data.getString("date"), data.getString("text"), data.getString("serverid")));
                     arrayAdapter.notifyDataSetChanged();
                 } catch (Exception e) {
                     Toast.makeText(ChatActivity.this, "Something wrong with the message data", Toast.LENGTH_SHORT).show();
@@ -110,6 +112,7 @@ public class ChatActivity extends ActionBarActivity {
     @Override
     protected void onDestroy()
     {
+        super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 
