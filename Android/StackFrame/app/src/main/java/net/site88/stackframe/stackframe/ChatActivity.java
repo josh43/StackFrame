@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 
 import com.github.nkzawa.emitter.Emitter;
@@ -46,7 +47,7 @@ public class ChatActivity extends ActionBarActivity {
 
         chatView = (ListView) findViewById(R.id.chatView);
 
-        chat.add(new Message("Application", "None", "text", "none", "Welcome to StackFrame!", "0"));
+        chat.add(new Message("Application", "None", "text", (new Date()).getTime() + "", "Welcome to StackFrame!", "0"));
 
         message = (EditText) findViewById(R.id.message);
         send = (Button) findViewById(R.id.send);
@@ -75,6 +76,14 @@ public class ChatActivity extends ActionBarActivity {
                     JSONObject data = new JSONObject(message);
                     chat.add(new Message(data.getString("username"), data.getString("token"), data.getString("type"), data.getString("date"), data.getString("text"), data.getString("serverid")));
                     arrayAdapter.notifyDataSetChanged();
+                    if(chatView.getLastVisiblePosition() == chat.size() - 2)
+                    {
+                        chatView.smoothScrollToPosition(chat.size() - 1);
+                    }
+                    else
+                    {
+                        Log.d("StackFrame-Backend", "Position of listview is not at the end, not scrolling to bottom: " + chatView.getLastVisiblePosition() + "/" + chat.size() );
+                    }
                 } catch (Exception e) {
                     Toast.makeText(ChatActivity.this, "Something wrong with the message data", Toast.LENGTH_SHORT).show();
                 }

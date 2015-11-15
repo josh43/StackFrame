@@ -72,13 +72,6 @@ public class BubbleAdapter extends BaseAdapter {
         return row;
     }
 
-    /*@Override
-    public void notifyDataSetChanged()
-    {
-
-        super.notifyDataSetChanged();
-    }*/
-
     public String cleanDate(String prevDate)
     {
         String output = "";
@@ -87,7 +80,18 @@ public class BubbleAdapter extends BaseAdapter {
         try {
             prevDateNum = Long.parseLong(prevDate);
             diff = (new Date().getTime()) - prevDateNum;
-            output = diff + "ms ago";
+            if(diff < 1000) //Less than 1 second
+                output = "0s";
+            else if(diff < (60 * 1000)) //Less than 1 minute
+                output = (diff / 1000) + "s";
+            else if(diff < (60 * 60 * 1000)) //Less than 1 hour
+                output = (diff / (60 * 1000)) + "m " + ((diff % (60 * 1000)) / 1000) + "s";
+            else if(diff < (24 * 60 * 60 * 1000)) //Less than 1 day
+                output = (diff % (60 * 60 * 1000)) + "h " + ((diff % (60 * 60 * 1000)) / (60 * 1000)) + "m " ;//+ (((diff % (60 * 60 * 1000)) % (60 * 1000)) / 1000) + "s";
+            else if(diff > (24 * 60 * 60 * 1000)) //Less than 1 year
+                output = (diff % (24 * 60 * 60 * 1000)) + "d " + ((diff % (24 * 60 * 60 * 1000)) % (60 * 60 * 1000)) + "h " ;//+ (((diff % (24 * 60 * 60 * 1000)) % (60 * 60 * 1000)) / (60 * 1000)) + "m " + ((((diff % (24 * 60 * 60 * 1000)) % (60 * 60 * 1000)) % (60 * 1000)) / 1000) + "s";
+           else
+                output = diff + "ms ago";
         } catch(Exception e)
         {
             Log.w("StackFrame UI", "Malformed date string, should be in ms since 1970 format: " + prevDate);

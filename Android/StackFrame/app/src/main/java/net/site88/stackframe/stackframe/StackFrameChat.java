@@ -47,7 +47,7 @@ public class StackFrameChat extends Service
 
     String token;
     String serverid;
-    Long lastMessage;
+    Long lastMessage = new Date().getTime();
 
     LocalBroadcastManager broadcast;
     BroadcastReceiver mMessageReceiver;
@@ -105,26 +105,26 @@ public class StackFrameChat extends Service
             @Override
             public void onReceive(Context context, Intent intent) {
                 // Get extra data included in the Intent
-                if(intent.getAction() != null && intent.getAction().equals("outgoingMessage") )
-                {
+                if(intent.getAction() != null && intent.getAction().equals("outgoingMessage") && (new Date().getTime()) - lastMessage > 100) {
                     Log.d("StackFrame-Backend", "For sure got a unique outgoing message event");
+                    lastMessage = new Date().getTime();
+
+                    String message = intent.getStringExtra("message");
+                    //Log.d("StackFrame-Backend", "Got message: " + message);
+                    JSONObject output = new JSONObject();
+                    try {
+                        output.put("username", username);
+                        output.put("token", token);
+                        output.put("type", "text");
+                        output.put("date", new Date().getTime());
+                        output.put("text", message);
+                        output.put("serverid", serverid);
+                    } catch (Exception e) {
+                        Toast.makeText(StackFrameChat.this, "Unable to construct message", Toast.LENGTH_SHORT).show();
+                    }
+                    socket.emit("message", output);
+                    Log.v("StackFrame Backend", "Sending message: " + message);
                 }
-                String message = intent.getStringExtra("message");
-                //Log.d("StackFrame-Backend", "Got message: " + message);
-                JSONObject output = new JSONObject();
-                try {
-                    output.put("username", username);
-                    output.put("token", token);
-                    output.put("type", "text");
-                    output.put("date", new Date().getTime());
-                    output.put("text", message);
-                    output.put("serverid", serverid);
-                } catch (Exception e)
-                {
-                    Toast.makeText(StackFrameChat.this, "Unable to construct message", Toast.LENGTH_SHORT).show();
-                }
-                socket.emit("message", output);
-                Log.v("StackFrame Backend", "Sending message: " + message);
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("outgoingMessage"));
