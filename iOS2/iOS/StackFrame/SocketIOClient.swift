@@ -242,24 +242,69 @@ public final class SocketIOClient: NSObject, SocketEngineClient {
         close()
     }
     
+//    /**
+//     Send a message to the server
+//     */
+//    public func emit(event: String, items: AnyObject...) {
+//        Logger.log("\nEmit: (Swift) message\n",
+//            type: logType)
+//        emit(event, items: items)
+//    }
+
+//    /**
+//     Same as emit, but meant for Objective-C
+//     */
+//    //withItems items: [AnyObject]
+//    public func emit(event: String, usernameString: String, passwordString: String, locationString: String) {
+//                Logger.log("\n\nEmit: (Objective-C) message\n\n",
+//                    type: logType)
+//        
+//                guard status == .Connected else {
+//                    return
+//                }
+//        
+//        
+//                dispatch_async(emitQueue) {
+//                    //self._emit([event] + ["username": usernameString, "password": passwordString, "location": locationString])
+//                }
+//    }
+    
+    
     /**
-     Send a message to the server
-     */
+    Send a message to the server
+    */
     public func emit(event: String, _ items: AnyObject...) {
         emit(event, withItems: items)
     }
     
     /**
-     Same as emit, but meant for Objective-C
-     */
+    Same as emit, but meant for Objective-C
+    */
     public func emit(event: String, withItems items: [AnyObject]) {
         guard status == .Connected else {
+            handleEvent("error", data: ["Tried emitting \(event) when not connected"], isInternalMessage: true)
             return
         }
         
         dispatch_async(emitQueue) {
             self._emit([event] + items)
         }
+    }
+    
+    //(usernameString: String, passwordString: String, locationString: String)
+    public func emitRegister() {
+//        Logger.log("\n\nEmit: (Objective-C) message\n\n",
+//            type: logType)
+//        
+//        guard status == .Connected else {
+//            return
+//        }
+//        
+//        
+//        dispatch_async(emitQueue) {
+//            self.emit("register", ["username": usernameString, "password": passwordString, "location": locationString])
+//        }
+        
     }
     
     /**

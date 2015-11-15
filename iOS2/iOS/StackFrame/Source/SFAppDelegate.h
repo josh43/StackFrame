@@ -13,6 +13,7 @@
 #import "SFMessageStore.h"
 #import "SFPubNubHandler.h"//roller.h"
 #import "SFRegister.h"
+#import "StackFrame-Swift.h"
 
 @interface SFAppDelegate : UIResponder <UIApplicationDelegate, SFCallBackDelegate>
 @property(nonatomic,strong) UIWindow * window;

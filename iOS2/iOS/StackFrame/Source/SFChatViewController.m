@@ -9,12 +9,10 @@
 #import "SFChatViewController.h"
 #import "SFTableViewCell.h"
 #import "StackFrame-Swift.h"
+#import "SocketIO.h"
 @interface SFChatViewController ()
 
 @end
-
-
-
 
 @implementation SFChatViewController
 
@@ -39,7 +37,7 @@
     //_texField.frame = CGRectMake(0, 200, 300, 200);
    // _scrollView = [[UIScrollView alloc]init];
     _texField.delegate = self;
-    _texField.text = @"Braaaah";
+    _texField.text = @"";
     //[self.view addSubview:_scrollView];
     
     [_texField setReturnKeyType:UIReturnKeyDone];
@@ -78,9 +76,13 @@
     NSTimer *theTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(updateTime:) userInfo:nil repeats:NO];
     NSTimer *otherTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateEntries:) userInfo:nil repeats:NO];
     
-
-    
-   
+    [chatSocket on:@"message" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        NSLog(@"\n\nMESSAGE CALLBACK\n\n");
+        SFMessage * messageToAdd = [[SFMessage alloc]initChatMessageWithString:@"HELLO"];
+        [self.messages addObject:messageToAdd];
+        [self.tableView reloadData];
+        NSLog(@"\n\nRELOAD TABLE\n\n");
+    }];
 }
 -(void) updateEntries :(NSTimer*) t{
     if(_pubNubHandler != nil){
@@ -429,8 +431,6 @@ NSArray *cells = [self.tableView visibleCells];
             NSLog(@"%@\n",toPrint);
             }
     }
-    
-    
 }
 
 #pragma mark - PubNubCub
@@ -517,15 +517,6 @@ NSArray *cells = [self.tableView visibleCells];
             
         }
     }
-    
-   
-   
-    
-    
-   
-    
-   
-    
 }
 
 
