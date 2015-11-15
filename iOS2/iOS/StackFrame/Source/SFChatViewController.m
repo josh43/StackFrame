@@ -442,57 +442,61 @@ NSArray *cells = [self.tableView visibleCells];
     
     
     // BEGIN
-    
+   // self.userName,@"user",self.texField.text
 
-
-    
+    NSString *messageString = [NSString stringWithFormat:@"[{\"username\":\"%@\", \"token\":\"123\", \"type\":\"text\", \"date\":\"14124124124\", \"text\":\"%@\", \"serverid\":\"123\"}]",self.userName, self.texField.text];
+    NSLog(@"\n\nstringData=%@\n\n", messageString);
+    NSArray *messageJSON = [NSJSONSerialization JSONObjectWithData:[messageString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:NULL];
+    NSArray *tableData = messageJSON;
+    NSLog(@"\n\ntableData=%@\n\n", tableData);
+    [chatSocket emit:@"message" withItems:messageJSON];
     
     // END
     
-    @try{
-    NSURL * url = [NSURL URLWithString:@"http://localhost:3000/post/AZ"]; //1
-    
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod =  @"POST";//2
-    NSDictionary * dict;;
-    dict = [NSDictionary dictionaryWithObjectsAndKeys:self.userName,@"user",self.texField.text,@"cmessage", nil];
-        
-        [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"]; //4
-
-    NSData* data = [NSJSONSerialization dataWithJSONObject:dict options:0 error:NULL]; //3
-    request.HTTPBody = data;
-    
-   // [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"]; //4
-    
-    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
-    
-    NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) { //5
-        if (!error) {
-            NSArray* responseArray = @[[NSJSONSerialization JSONObjectWithData:data options:0 error:NULL]];
-            
-            
-            //[self parseAndAddLocations:responseArray toArray:self.objects];
-        }
-    }];
-    [dataTask resume];
-    
-    
-    
-    if(_pubNubHandler != nil){
-        NSDictionary * dict = [_pubNubHandler createDictionaryWith:_userName withAction:ACTION_USER_POSTED_MESSAGE withData:_texField.text];
-        
-        [_pubNubHandler publish:dict];
-}
-    }@catch(NSException * e){
-        NSLog(@"Exception caught");
-        NSLog(@"%@",e);
-        
-    }@finally{
-        
-        
-    }
-    _texField.text = @"";
+//    @try{
+//    NSURL * url = [NSURL URLWithString:@"http://localhost:3000/post/AZ"]; //1
+//    
+//    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
+//    request.HTTPMethod =  @"POST";//2
+//    NSDictionary * dict;;
+//    dict = [NSDictionary dictionaryWithObjectsAndKeys:self.userName,@"user",self.texField.text,@"cmessage", nil];
+//        
+//        [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"]; //4
+//
+//    NSData* data = [NSJSONSerialization dataWithJSONObject:dict options:0 error:NULL]; //3
+//    request.HTTPBody = data;
+//    
+//   // [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"]; //4
+//    
+//    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
+//    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
+//    
+//    NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) { //5
+//        if (!error) {
+//            NSArray* responseArray = @[[NSJSONSerialization JSONObjectWithData:data options:0 error:NULL]];
+//            
+//            
+//            //[self parseAndAddLocations:responseArray toArray:self.objects];
+//        }
+//    }];
+//    [dataTask resume];
+//    
+//    
+//    
+//    if(_pubNubHandler != nil){
+//        NSDictionary * dict = [_pubNubHandler createDictionaryWith:_userName withAction:ACTION_USER_POSTED_MESSAGE withData:_texField.text];
+//        
+//        [_pubNubHandler publish:dict];
+//}
+//    }@catch(NSException * e){
+//        NSLog(@"Exception caught");
+//        NSLog(@"%@",e);
+//        
+//    }@finally{
+//        
+//        
+//    }
+//    _texField.text = @"";
 
 }
 -(void) reloadTableView{
@@ -518,9 +522,5 @@ NSArray *cells = [self.tableView visibleCells];
         }
     }
 }
-
-
-
-
 
 @end
