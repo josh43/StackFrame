@@ -1,8 +1,14 @@
 package net.site88.stackframe.stackframe;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Looper;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,18 +22,22 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import com.github.nkzawa.emitter.Emitter;
 import com.pubnub.api.*;
 import org.json.*;
 
 
 public class ChatActivity extends ActionBarActivity {
 
-    ArrayList<String> chat = new ArrayList<String>();
-    ArrayAdapter arrayAdapter;
+    ArrayList<Message> chat = new ArrayList<Message>();
+    //ArrayAdapter arrayAdapter;
+    BubbleAdapter arrayAdapter;
     ListView chatView;
     EditText message;
     Button send;
     boolean newMessage = false;
+    BroadcastReceiver mMessageReceiver;
+    LocalBroadcastManager broadcast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +46,7 @@ public class ChatActivity extends ActionBarActivity {
 
         chatView = (ListView) findViewById(R.id.chatView);
 
-        final Pubnub pubnub = new Pubnub("pub-c-1a6a9ba9-b6b2-45aa-8dbe-7f6b398fdf14", "sub-c-b5dbfc4e-6252-11e5-8a6a-02ee2ddab7fe");
-        chat.add("Welcome to StackFrame!");
+        chat.add(new Message("Application", "None", "text", "none", "Welcome to StackFrame!", "0"));
 
         message = (EditText) findViewById(R.id.message);
         send = (Button) findViewById(R.id.send);
@@ -45,28 +54,35 @@ public class ChatActivity extends ActionBarActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JSONObject data = new JSONObject();
-
-                try {
-                    data.put("text", message.getText());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                pubnub.publish("demo_tutorial", data, new Callback() {});
+                String output =  message.getText().toString();
+                message.setText("");
+                sendResult(output);
+                Log.d("StackFrame UI", "Recieved send button press, initiating message send.");
             }
         });
 
-        arrayAdapter = new ArrayAdapter<String>(
-                ChatActivity.this,
-                android.R.layout.simple_list_item_1,
-                chat );
+        arrayAdapter = new BubbleAdapter(this, chat);
 
         chatView.setAdapter(arrayAdapter);
 
+        BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // Get extra data included in the Intent
 
-
-
+                String message = intent.getStringExtra("message");
+                try {
+                    JSONObject data = new JSONObject(message);
+                    chat.add(new Message(data.getString("username"), data.getString("token"), data.getString("type"), data.getString("date"), data.getString("text"), data.getString("serverid")));
+                    arrayAdapter.notifyDataSetChanged();
+                } catch (Exception e) {
+                    Toast.makeText(ChatActivity.this, "Something wrong with the message data", Toast.LENGTH_SHORT).show();
+                }
+                Log.d("StackFrame-UI", "Got message: " + message);
+                //Toast.makeText(ChatActivity.this, "Got a message: " + message, Toast.LENGTH_SHORT).show();
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("incomingMessage"));
     }
 
     @Override
@@ -89,5 +105,19 @@ public class ChatActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+    }
+
+    public void sendResult(String message) {
+        Intent intent = new Intent("outgoingMessage");
+        intent.putExtra("message", message);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        Log.d("StackFrame UI", "Message sent to backend.");
     }
 }

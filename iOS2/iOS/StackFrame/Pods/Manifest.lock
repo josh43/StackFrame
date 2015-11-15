@@ -9,12 +9,15 @@ PODS:
     - CocoaLumberjack/Default
   - PubNub (4.0.5):
     - CocoaLumberjack (= 2.0.0)
+  - Socket.IO-Client-Swift (4.1.1)
 
 DEPENDENCIES:
   - PubNub (~> 4.0)
+  - Socket.IO-Client-Swift (~> 4.1.1)
 
 SPEC CHECKSUMS:
   CocoaLumberjack: a6f77d987d65dc7ba86b0f84db7d0b9084f77bcb
   PubNub: 5c2aa3eb582606f97975a757bd1c33a827f07fad
+  Socket.IO-Client-Swift: 2620dbb779edbbd0bc0cac96c053ca7c35aba652
 
 COCOAPODS: 0.38.2

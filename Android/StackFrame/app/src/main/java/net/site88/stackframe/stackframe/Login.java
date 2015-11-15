@@ -50,11 +50,14 @@ public class Login extends AppCompatActivity {
     EditText username;
     EditText password;
     Socket socket;
+    Intent loginService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_enter);
 
         title = (TextView) findViewById(R.id.title);
         login = (Button) findViewById(R.id.login);
@@ -66,35 +69,21 @@ public class Login extends AppCompatActivity {
             title.setTypeface(Orbitron);
         }
 
-        try {
-            socket = IO.socket("http://nodejs-stackframe.nhcloud.com");
-        } catch (Exception e) {}
+        loginService = new Intent(Login.this, StackFrameChat.class);
+        loginService.putExtra("action", "startup");
+        startService(loginService);
 
-
-        socket.on("register", socketRegister());
-        socket.on("message", socketRegister());
-        socket.connect();
-        JSONObject registerjson = new JSONObject();
-        try {
-            registerjson.put("username", username.getText().toString());
-            registerjson.put("password", password.getText().toString());
-            registerjson.put("geoloc", "location");
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(Login.this, "Error putting together registration data", Toast.LENGTH_SHORT).show();
-            Log.e("StackFrame", e.getStackTrace().toString());
-            e.printStackTrace();
-        }
-        socket.emit("register", registerjson);
 
         login.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 //TODO: Add logic for some type of animation
-
-
+                loginService.putExtra("action", "register");
+                loginService.putExtra("username", username.getText().toString());
+                loginService.putExtra("passowrd", password.getText().toString());
+                loginService.putExtra("geoloc", "location");
+                startService(loginService);
                 Toast.makeText(Login.this, "Attempting to log in...", Toast.LENGTH_SHORT).show();
             }
         });
@@ -122,29 +111,12 @@ public class Login extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private Emitter.Listener socketRegister()
+    @Override
+    public void onDestroy()
     {
-        Emitter.Listener onNewMessage = new Emitter.Listener() {
-            @Override
-            public void call(final Object... args) {
-               Login.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        JSONObject data = (JSONObject) args[0];
-                        String token;
-                        String serverid;
-                        try {
-                            token = data.getString("token");
-                            serverid = data.getString("serverid");
-                            Toast.makeText(Login.this, "Received token '" + token + "' and serverid '" + serverid + "'.", Toast.LENGTH_SHORT).show();
-                        } catch (JSONException e) {
-                            return;
-                        }
-                    }
-                });
-            }
-        };
-        return onNewMessage;
+        super.onDestroy();
+        stopService(loginService);
+        overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_shrink_fade_out_from_bottom);
     }
 }
 
