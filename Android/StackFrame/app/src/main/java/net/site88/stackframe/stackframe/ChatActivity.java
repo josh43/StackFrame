@@ -57,14 +57,11 @@ public class ChatActivity extends ActionBarActivity {
                 String output =  message.getText().toString();
                 message.setText("");
                 sendResult(output);
+                Log.d("StackFrame UI", "Recieved send button press, initiating message send.");
             }
         });
 
         arrayAdapter = new BubbleAdapter(this, chat);
-                /*= new ArrayAdapter<String>(
-                ChatActivity.this,
-                android.R.layout.simple_expandable_list_item_1,
-                chat );*/
 
         chatView.setAdapter(arrayAdapter);
 
@@ -72,6 +69,7 @@ public class ChatActivity extends ActionBarActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 // Get extra data included in the Intent
+
                 String message = intent.getStringExtra("message");
                 try {
                     JSONObject data = new JSONObject(message);
@@ -118,8 +116,8 @@ public class ChatActivity extends ActionBarActivity {
 
     public void sendResult(String message) {
         Intent intent = new Intent("outgoingMessage");
-        // You can also include some extra data.
         intent.putExtra("message", message);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        Log.d("StackFrame UI", "Message sent to backend.");
     }
 }

@@ -47,6 +47,7 @@ public class StackFrameChat extends Service
 
     String token;
     String serverid;
+    Long lastMessage;
 
     LocalBroadcastManager broadcast;
     BroadcastReceiver mMessageReceiver;
@@ -104,8 +105,12 @@ public class StackFrameChat extends Service
             @Override
             public void onReceive(Context context, Intent intent) {
                 // Get extra data included in the Intent
+                if(intent.getAction() != null && intent.getAction().equals("outgoingMessage") )
+                {
+                    Log.d("StackFrame-Backend", "For sure got a unique outgoing message event");
+                }
                 String message = intent.getStringExtra("message");
-                Log.d("StackFrame-Backend", "Got message: " + message);
+                //Log.d("StackFrame-Backend", "Got message: " + message);
                 JSONObject output = new JSONObject();
                 try {
                     output.put("username", username);
@@ -119,7 +124,7 @@ public class StackFrameChat extends Service
                     Toast.makeText(StackFrameChat.this, "Unable to construct message", Toast.LENGTH_SHORT).show();
                 }
                 socket.emit("message", output);
-                //Toast.makeText(ChatActivity.this, "Got a message: " + message, Toast.LENGTH_SHORT).show();
+                Log.v("StackFrame Backend", "Sending message: " + message);
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("outgoingMessage"));
