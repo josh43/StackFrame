@@ -19,6 +19,11 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
+		<key>Socket.IO-Client-Swift.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -32,7 +37,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>2BD6AA3C40B1E901EA43633FAA9105DB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3896B43EE44EB46B8EC8D80BC993AC04</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>3A1F73DF1A7483D9D3F21ED9A32022EC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C412B1C55AAD0EFE041C04AB03901E9C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
