@@ -1,0 +1,21 @@
+if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
+          connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+          process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+          process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+          process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+          process.env.OPENSHIFT_APP_NAME;
+        }
+
+// this will give you the proper connection string  where connection_string is 
+// just a var 
+
+self.MongoClient.connect("mongodb://"+connection_string,function(err,db){
+            if(err){
+                console.log("Error connecting to mongo :(((");
+                    return;
+                }else{
+                    globalDB = db;
+                    console.log("Successfully Connected to the mongo server! ");
+                }
+            });
+
