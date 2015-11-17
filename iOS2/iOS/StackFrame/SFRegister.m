@@ -7,6 +7,7 @@
 //
 
 #import "SFRegister.h"
+#import "SocketIO.h"
 
 @interface SFRegister ()
 
@@ -17,78 +18,103 @@
 - (void)viewDidLoad {
     _doneRegistering = NO;
     [super viewDidLoad];
+    
+    
     // Do any additional setup after loading the view from its nib.
 }
 - (IBAction)signUp:(id)sender {
-    NSLog(@"Wow if this works \n");
+    NSLog(@"signUp \n");
     
-    
-    
-    @try {
+    [chatSocket on:@"register" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        NSLog(@"\n\nREGISTER CALLBACK\n\n");
+        NSString * strongPointa = [[NSString alloc]initWithString:_userNameField.text];
+            NSString * passWord = [[NSString alloc]initWithString:_passwordTwoField.text];
+            [_userNameField resignFirstResponder];
+            [_passwordOneField resignFirstResponder];
+            [_passwordTwoField resignFirstResponder];
+            //Code that presents or dismisses a view controller here
+            [_delegate appDoneRegistering:self :strongPointa :passWord];
         
-        
-        if(_passwordOneField.text != _passwordTwoField.text){
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Password" message:@"Your passwords do not match brah" delegate:self cancelButtonTitle:@"cancel" otherButtonTitles:nil];
-            // optional - add more buttons:
-            [alert addButtonWithTitle:@"Yes"];
-            [alert show];
-            
-        }
-        else {
-            
-            // super hacky
-            // [self otherMethod];
-            //return;
-            
-            
-            NSString * kBaseURL = [NSString stringWithFormat:@"http://localhost:3000/register/%@/%@",self.userNameField.text,self.passwordOneField.text];
-            
-            
-            NSURL* url = [NSURL URLWithString:kBaseURL];
-            
-            NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
-            request.HTTPMethod = @"GET"; //2
-            
-            //3
-            
-            NSHTTPURLResponse * resp = nil;
-            NSError * err = [[NSError alloc]init];
-            NSData* config = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&err];
-            if(config){
-                if(err){
-                    NSLog(@"Error someone\n");
-                }
-                NSDictionary* responseDict = [NSJSONSerialization JSONObjectWithData:config options:0 error:NULL];
-                if(responseDict[@"ObjectID"]){
-                    if([responseDict[@"ObjectID"] isKindOfClass:[NSString class]]){
-                        _myObjectID = responseDict[@"ObjectID"];
-                        NSLog(@"Got the objectID");
-                        
-                        NSString * strongPointa = [[NSString alloc]initWithString:_userNameField.text];
-                        NSString * passWord = [[NSString alloc]initWithString:_passwordTwoField.text];
-                        [_userNameField resignFirstResponder];
-                        [_passwordOneField resignFirstResponder];
-                        [_passwordTwoField resignFirstResponder];
-                        //Code that presents or dismisses a view controller here
-                        
-                        [_delegate appDoneRegistering:self :strongPointa :passWord];
-                        
-                        return;
-                    }
-                    
-                    
-                    
-                }
+    }];
+    
+    if(_passwordOneField.text != _passwordTwoField.text){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Password" message:@"Your passwords do not match." delegate:self cancelButtonTitle:@"cancel"otherButtonTitles:nil];
+        // optional - add more buttons:
+        [alert addButtonWithTitle:@"Yes"];
+        [alert show];
+    }else {
+    
+    
+        NSLog(@"\n\nREGISTER\n\n");
+    
+        NSString *registerString =  [NSString stringWithFormat:@"[{\"username\":\"%@\", \"password\":\"%@\", \"geoloc\":\"123\"}]",self.self.userNameField.text, self.self.passwordOneField.text];
+        NSLog(@"\n\nstringData=%@\n\n", registerString);
+        NSArray *registerJSON = [NSJSONSerialization JSONObjectWithData:[registerString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:NULL];
+        NSArray *tableData = registerJSON;
+        NSLog(@"\n\ntableData=%@\n\n", tableData);
+    
+        [chatSocket emit:@"register" withItems:registerJSON];
+                
             }
-            
-            
-            
-        }
-        
-    }
-    @catch(NSException * e){
-        NSLog(@"Cathcing exception %@",e);
-    }
+    
+//    @try {
+//        
+//        
+
+//            
+//            // super hacky
+//            // [self otherMethod];
+//            //return;
+//            
+//            
+//            NSString * kBaseURL = [NSString stringWithFormat:@"http://localhost:3000/register/%@/%@",self.userNameField.text,self.passwordOneField.text];
+//            
+//            
+//            NSURL* url = [NSURL URLWithString:kBaseURL];
+//            
+//            NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
+//            request.HTTPMethod = @"GET"; //2
+//            
+//            //3
+//            
+//            NSHTTPURLResponse * resp = nil;
+//            NSError * err = [[NSError alloc]init];
+//            NSData* config = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&err];
+//            if(config){
+//                if(err){
+//                    NSLog(@"Error someone\n");
+//                }
+//                NSDictionary* responseDict = [NSJSONSerialization JSONObjectWithData:config options:0 error:NULL];
+//                if(responseDict[@"ObjectID"]){
+//                    if([responseDict[@"ObjectID"] isKindOfClass:[NSString class]]){
+//                        _myObjectID = responseDict[@"ObjectID"];
+//                        NSLog(@"Got the objectID");
+//                        
+//                        NSString * strongPointa = [[NSString alloc]initWithString:_userNameField.text];
+//                        NSString * passWord = [[NSString alloc]initWithString:_passwordTwoField.text];
+//                        [_userNameField resignFirstResponder];
+//                        [_passwordOneField resignFirstResponder];
+//                        [_passwordTwoField resignFirstResponder];
+//                        //Code that presents or dismisses a view controller here
+//                        
+//                        [_delegate appDoneRegistering:self :strongPointa :passWord];
+//                        
+//                        return;
+//                    }
+//                    
+//                    
+//                    
+//                }
+//            }
+//            
+//            
+//            
+//        }
+//        
+//    }
+//    @catch(NSException * e){
+//        NSLog(@"Cathcing exception %@",e);
+//    }
 }
 
 
