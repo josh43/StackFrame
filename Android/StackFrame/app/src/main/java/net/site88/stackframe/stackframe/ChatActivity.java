@@ -1,132 +1,109 @@
 package net.site88.stackframe.stackframe;
-
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Looper;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.ActionBarActivity;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.text.Html;
-import android.util.Log;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Hashtable;
+import net.site88.stackframe.stackframe.R;
 
-import com.github.nkzawa.emitter.Emitter;
-import com.pubnub.api.*;
-import org.json.*;
+public class ChatActivity extends ActionBarActivity
+{
 
-
-public class ChatActivity extends ActionBarActivity {
-
-    ArrayList<Message> chat = new ArrayList<Message>();
-    //ArrayAdapter arrayAdapter;
-    BubbleAdapter arrayAdapter;
-    ListView chatView;
-    EditText message;
-    Button send;
-    boolean newMessage = false;
-    BroadcastReceiver mMessageReceiver;
-    LocalBroadcastManager broadcast;
+    private String[] mPlanetTitles;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private CharSequence mTitle;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        chatView = (ListView) findViewById(R.id.chatView);
 
-        chat.add(new Message("Application", "None", "text", (new Date()).getTime() + "", "Welcome to StackFrame!", "0"));
+        mTitle = "testTitle";
+        mPlanetTitles = new String[]{"one", "two", "three"};
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-        message = (EditText) findViewById(R.id.message);
-        send = (Button) findViewById(R.id.send);
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mPlanetTitles));
+        mDrawerList.setOnItemClickListener( new DrawerItemClickListener());
 
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String output =  message.getText().toString();
-                message.setText("");
-                sendResult(output);
-                Log.d("StackFrame UI", "Recieved send button press, initiating message send.");
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close)
+        {
+            public void onDrawerClosed(View view)
+            {
+                getActionBar().setTitle(mTitle);
             }
-        });
 
-        arrayAdapter = new BubbleAdapter(this, chat);
-
-        chatView.setAdapter(arrayAdapter);
-
-        BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                // Get extra data included in the Intent
-
-                String message = intent.getStringExtra("message");
-                try {
-                    JSONObject data = new JSONObject(message);
-                    chat.add(new Message(data.getString("username"), data.getString("token"), data.getString("type"), data.getString("date"), data.getString("text"), data.getString("serverid")));
-                    arrayAdapter.notifyDataSetChanged();
-                    if(chatView.getLastVisiblePosition() == chat.size() - 2)
-                    {
-                        chatView.smoothScrollToPosition(chat.size() - 1);
-                    }
-                    else
-                    {
-                        Log.d("StackFrame-Backend", "Position of listview is not at the end, not scrolling to bottom: " + chatView.getLastVisiblePosition() + "/" + chat.size() );
-                    }
-                } catch (Exception e) {
-                    Toast.makeText(ChatActivity.this, "Something wrong with the message data", Toast.LENGTH_SHORT).show();
-                }
-                Log.d("StackFrame-UI", "Got message: " + message);
-                //Toast.makeText(ChatActivity.this, "Got a message: " + message, Toast.LENGTH_SHORT).show();
+            public void onDrawerOpened(View drawerView)
+            {
+                getActionBar().setTitle(mTitle);
             }
         };
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("incomingMessage"));
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         getMenuInflater().inflate(R.menu.menu_chat, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    protected void onPostCreate(Bundle savedInstanceState)
+    {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if(mDrawerToggle.onOptionsItemSelected(item))
+        {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onDestroy()
+    private void selectItem(int position)
     {
-        super.onDestroy();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        Toast.makeText(this, "Clicked a list item", Toast.LENGTH_SHORT).show();
+
+        mDrawerList.setItemChecked(position, true);
+        setTitle(mPlanetTitles[position]);
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
-    public void sendResult(String message) {
-        Intent intent = new Intent("outgoingMessage");
-        intent.putExtra("message", message);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-        Log.d("StackFrame UI", "Message sent to backend.");
+    private class DrawerItemClickListener implements ListView.OnItemClickListener
+    {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id)
+        {
+            selectItem(position);
+        }
     }
 }
