@@ -24,8 +24,23 @@
 }
 - (IBAction)signUp:(id)sender {
     NSLog(@"signUp \n");
+    if(_passwordOneField.text != _passwordTwoField.text){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Password" message:@"Your passwords do not match." delegate:self cancelButtonTitle:@"cancel"otherButtonTitles:nil];
+        // optional - add more buttons:
+        [alert addButtonWithTitle:@"Yes"];
+        [alert show];
+    }else {
+    
+    if([[self.userNameField text] isEqualToString:@""] || [[self.passwordOneField text] isEqualToString:@""] || [[self.passwordTwoField text] isEqualToString:@""]) {
+        
+        [self alertStatus:@"Please enter Username and Password" :@"SignUp in Failed!" :0];
+    }else{
     
     [chatSocket on:@"register" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        
+        id json = data[0];
+        if ((long)[json objectForKey:@"token"] != -1) {
+        
         NSLog(@"\n\nREGISTER CALLBACK\n\n");
         NSString * strongPointa = [[NSString alloc]initWithString:_userNameField.text];
             NSString * passWord = [[NSString alloc]initWithString:_passwordTwoField.text];
@@ -34,15 +49,12 @@
             [_passwordTwoField resignFirstResponder];
             //Code that presents or dismisses a view controller here
             [_delegate appDoneRegistering:self :strongPointa :passWord];
+            
+        }else{
+            
+        }
         
     }];
-    
-    if(_passwordOneField.text != _passwordTwoField.text){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Password" message:@"Your passwords do not match." delegate:self cancelButtonTitle:@"cancel"otherButtonTitles:nil];
-        // optional - add more buttons:
-        [alert addButtonWithTitle:@"Yes"];
-        [alert show];
-    }else {
     
     
         NSLog(@"\n\nREGISTER\n\n");
@@ -56,6 +68,7 @@
         [chatSocket emit:@"register" withItems:registerJSON];
                 
             }
+    }
     
 //    @try {
 //        
@@ -126,6 +139,25 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag
+{
+    UIAlertController* alert = [UIAlertController
+                                alertControllerWithTitle:title
+                                message:msg
+                                preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"OK"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                         }];
+    
+    [alert addAction:ok];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 /*
  #pragma mark - Navigation
  
