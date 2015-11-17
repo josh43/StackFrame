@@ -65,19 +65,28 @@ const int MAX_PASSWORD_LENGTH = 16;
     [self.delegate appChangeToRegisterState];
 }
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 - (IBAction)loginPressed:(id)sender {
+    
+    if([[self.userName text] isEqualToString:@""] || [[self.passWord text] isEqualToString:@""] ) {
+        
+        [self alertStatus:@"Please enter Username and Password" :@"Sign in Failed!" :0];
+    }else{
     
     [chatSocket on:@"register" callback:^(NSArray* data, SocketAckEmitter* ack) {
         NSLog(@"\n\nREGISTER CALLBACK\n\n");
-        //_myObjectID = responseDict[@"ObjectID"];
-        //NSLog(@"Got the objectID");
-        self.doneRegistering = YES;
-        self.uName= [[NSString alloc]initWithString:self.userName.text];
-        self.pWord = [[NSString alloc ]initWithString:self.passWord.text];
-        [self dismissViewControllerAnimated:YES completion:NULL];
-        [self.delegate appDoneRegistering:self :self.uName :self.pWord];
+        
+        id json = data[0];
+        
+        if ((long)[json objectForKey:@"token"] != -1) {
+            self.doneRegistering = YES;
+            self.uName= [[NSString alloc]initWithString:self.userName.text];
+            self.pWord = [[NSString alloc ]initWithString:self.passWord.text];
+            [self dismissViewControllerAnimated:YES completion:NULL];
+            [self.delegate appDoneRegistering:self :self.uName :self.pWord];
+        }else{
+            [self alertStatus:@"Sign In Failed." :@"Incorect Username and or Password!" :0];
+        }
+    
 
     }];
     
@@ -91,7 +100,7 @@ const int MAX_PASSWORD_LENGTH = 16;
 
     [chatSocket emit:@"register" withItems:registerJSON];
     
-
+    }
 //    
 //    NSInteger success = 0;
 //    @try {
@@ -172,7 +181,6 @@ const int MAX_PASSWORD_LENGTH = 16;
     
     
 }
-#pragma GCC diagnostic pop
 
 - (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag
 {
