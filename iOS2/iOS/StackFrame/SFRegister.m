@@ -13,27 +13,29 @@
 
 @end
 
-@implementation SFRegister
+@implementation SFRegister	
 
 - (void)viewDidLoad {
     _doneRegistering = NO;
     [super viewDidLoad];
-    
-    
+    CGFloat r,b,g;
+    r = 0x000024/256.0f;
+    b = 0x0000E3/256.0f;
+    g = 0x0000EB/256.0f;
+    UIColor * col= [UIColor colorWithRed:r green:g blue:b alpha:1.0f];
+    self.view.backgroundColor =  col;
     // Do any additional setup after loading the view from its nib.
 }
 - (IBAction)signUp:(id)sender {
     NSLog(@"signUp \n");
     if(_passwordOneField.text != _passwordTwoField.text){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Password" message:@"Your passwords do not match." delegate:self cancelButtonTitle:@"cancel"otherButtonTitles:nil];
-        // optional - add more buttons:
-        [alert addButtonWithTitle:@"Yes"];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Password" message:@"Your passwords do not match." delegate:self cancelButtonTitle:@"Okay"otherButtonTitles:nil];
         [alert show];
     }else {
     
     if([[self.userNameField text] isEqualToString:@""] || [[self.passwordOneField text] isEqualToString:@""] || [[self.passwordTwoField text] isEqualToString:@""]) {
         
-        [self alertStatus:@"Please enter Username and Password" :@"SignUp in Failed!" :0];
+        [self alertStatus:@"Please enter Username and Password" :@"Sign up Failed!" :0];
     }else{
     
     [chatSocket on:@"register" callback:^(NSArray* data, SocketAckEmitter* ack) {
@@ -41,8 +43,8 @@
         id json = data[0];
         if ((long)[json objectForKey:@"token"] != -1) {
         
-        NSLog(@"\n\nREGISTER CALLBACK\n\n");
-        NSString * strongPointa = [[NSString alloc]initWithString:_userNameField.text];
+            NSLog(@"\n\nREGISTER CALLBACK\n\n");
+            NSString * strongPointa = [[NSString alloc]initWithString:_userNameField.text];
             NSString * passWord = [[NSString alloc]initWithString:_passwordTwoField.text];
             [_userNameField resignFirstResponder];
             [_passwordOneField resignFirstResponder];
@@ -51,7 +53,7 @@
             [_delegate appDoneRegistering:self :strongPointa :passWord];
             
         }else{
-            
+            [self alertStatus:@"Username is in use" :@"Sign up Failed!" :0];
         }
         
     }];
