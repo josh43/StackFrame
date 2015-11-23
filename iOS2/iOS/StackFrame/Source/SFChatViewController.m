@@ -79,8 +79,10 @@
     [chatSocket on:@"message" callback:^(NSArray* data, SocketAckEmitter* ack) {
         NSLog(@"\n\nMESSAGE CALLBACK\n\n");
         
-        SFMessage * messageToAdd = [[SFMessage alloc]initChatMessageWithString:@"HELLO"];
-        [self.messages addObject:messageToAdd];
+        id json = data[0];
+        
+        SFMessage * messageToAdd = [[SFMessage alloc]initChatMessageWithString:[json objectForKey:@"text"]];
+        [self.myStore.messageStore addObject:messageToAdd];
         [self.tableView reloadData];
         NSLog(@"\n\nRELOAD TABLE\n\n");
     }];
