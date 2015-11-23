@@ -78,28 +78,26 @@ const int MAX_PASSWORD_LENGTH = 16;
 
 - (IBAction)loginPressed:(id)sender {
     
-    
     if([[self.userName text] isEqualToString:@""] || [[self.passWord text] isEqualToString:@""] ) {
-        
         [self alertStatus:@"Please enter Username and Password" :@"Sign in Failed!" :0];
     }else{
     
-    [chatSocket on:@"register" callback:^(NSArray* data, SocketAckEmitter* ack) {
-        NSLog(@"\n\nREGISTER CALLBACK\n\n");
+    [chatSocket on:@"login" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        NSLog(@"\n\n\n\n\nREGISTER CALLBACK\n\n\n\n\n");
         
         id json = data[0];
         
-        if ((long)[json objectForKey:@"token"] != -1) {
+        NSLog(@"\n\n\nTOKEN: %@\n\n\n",[json objectForKey:@"token"]);
+        
+        if ([[NSString stringWithFormat:@"%@",[json objectForKey:@"token"]] isEqualToString:@"-1"]) {
+            [self alertStatus:@"Sign In Failed." :@"Incorect Username and or Password!" :0];
+        }else{
             self.doneRegistering = YES;
             self.uName= [[NSString alloc]initWithString:self.userName.text];
             self.pWord = [[NSString alloc ]initWithString:self.passWord.text];
             [self dismissViewControllerAnimated:YES completion:NULL];
             [self.delegate appDoneRegistering:self :self.uName :self.pWord];
-        }else{
-            [self alertStatus:@"Sign In Failed." :@"Incorect Username and or Password!" :0];
         }
-    
-
     }];
     
     NSLog(@"\n\nREGISTER\n\n");
@@ -110,7 +108,7 @@ const int MAX_PASSWORD_LENGTH = 16;
     NSArray *tableData = registerJSON;
     NSLog(@"\n\ntableData=%@\n\n", tableData);
 
-    [chatSocket emit:@"register" withItems:registerJSON];
+    [chatSocket emit:@"login" withItems:registerJSON];
     
     }
 //

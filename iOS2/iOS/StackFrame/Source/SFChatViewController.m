@@ -156,8 +156,6 @@ NSArray *cells = [self.tableView visibleCells];
     switch (_phone_type) {
         case IPHONE6: {
             
-        
-            
             UIImageView * theView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 375, 65)];
             _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 65, 375, 544)];
             // this if for iphone 6
@@ -200,9 +198,6 @@ NSArray *cells = [self.tableView visibleCells];
 
     
     //_stackFrameTopBar.bounds = CGRectMake(0, 0, 250, 127);
-    
-
-
 
     _composeIcon = [[UIImage alloc]initWithContentsOfFile:[NSString stringWithFormat:@"%@%@%@", dir,@"Compose",magnification]];
     if(!_composeIcon){
@@ -233,13 +228,7 @@ NSArray *cells = [self.tableView visibleCells];
         
     }if(!_commentIcon){
         NSLog(@"Error loading _commentIcon icon\n");
-        
     }
-    
-        
-    
-    
-    
 }
 
 
