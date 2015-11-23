@@ -211,6 +211,8 @@ NSArray *cells = [self.tableView visibleCells];
     }
     _worldIcon = [[UIImage alloc]initWithContentsOfFile:[NSString stringWithFormat:@"%@%@%@", dir,@"World",magnification]];
     _cameraIcon = [[UIImage alloc]initWithContentsOfFile:[NSString stringWithFormat:@"%@%@%@", dir,@"Camera",magnification]];
+    
+    //TODO
     _middleFingerIcon= [[UIImage alloc]initWithContentsOfFile:[NSString stringWithFormat:@"%@%@%@", dir,@"mfinger",magnification]];
     _coolBrahIcon = [[UIImage alloc]initWithContentsOfFile:[NSString stringWithFormat:@"%@%@%@", dir,@"coolbra", magnification]];
     _commentIcon = [[UIImage alloc]initWithContentsOfFile:[NSString stringWithFormat:@"%@%@%@", dir,@"Chat",magnification]];
