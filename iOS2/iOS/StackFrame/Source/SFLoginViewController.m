@@ -43,11 +43,6 @@ const int MAX_PASSWORD_LENGTH = 16;
     g = 0x0000EB/256.0f;
     UIColor * col= [UIColor colorWithRed:r green:g blue:b alpha:1.0f];
     self.view.backgroundColor =  col;
-    
-    CALayer *bottomBorder = [CALayer layer];
-    bottomBorder.frame = CGRectMake(0.0f, self.view.frame.size.height - 2, self.view.frame.size.width, 1.0f);
-    bottomBorder.backgroundColor = [UIColor blackColor].CGColor;
-    [_userName.layer addSublayer:bottomBorder];
 
     chatSocket = [[SocketIOClient alloc] initWithSocketURL:@"http://nodejs-stackframe.rhcloud.com/" options:@{@"log": @YES, @"forcePolling": @YES}];
     
