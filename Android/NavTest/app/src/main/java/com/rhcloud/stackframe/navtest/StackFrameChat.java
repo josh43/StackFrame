@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,61 +41,71 @@ public class StackFrameChat extends Service
 
     String username;
     String password;
+    String socketid;
     String geoloc;
     Handler handler;
 
     Intent chat;
 
     String token;
-    String serverid;
+    int serverid;
     Long lastMessage = new Date().getTime();
 
     LocalBroadcastManager broadcast;
     BroadcastReceiver mMessageReceiver;
+    SharedPreferences loginInfo;
+    SharedPreferences.Editor loginEditor;
+    Bundle extra;
 
     /** Called when the service is being created. */
     @Override
     public void onCreate() {
-
+        loginInfo = getApplicationContext().getSharedPreferences("loginInfo", MODE_PRIVATE);
+        loginEditor = loginInfo.edit();
     }
 
     /** The service is starting, due to a call to startService() */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Bundle extra = intent.getExtras();
+        extra = intent.getExtras();
 
         if(extra.getString("action") != null && extra.getString("action").equals("startup")) {
             handler = new Handler();
             try {
-                socket = IO.socket("http://nodejs-stackframe.rhcloud.com");
+                String serverurl = StackFrameChat.this.getString(R.string.serverurl);
+                if(serverurl == null || serverurl.equals(""))
+                {
+                    serverurl = "public-stackframe.rhcloud.com";
+                    Log.d("StackFrame Backend", "Server url string came back null :(");
+                }
+                else Log.d("StackFrame Backend", "Using the url: " + serverurl);
+                socket = IO.socket(serverurl);
+                socket.on("login", onLogin);
+                socket.on("message", onMessage);
+                socket.on("ready", onConnect);
+                socket.on("private", onPrivate);
+                socket.connect();
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(this, "Error connecting socket to server", Toast.LENGTH_SHORT).show();
             }
         }
 
-        else if(extra.getString("action") != null && extra.getString("action").equals("register")) {
-            Toast.makeText(this, "Sending Registration Info to Server", Toast.LENGTH_SHORT).show();
+        else if(extra.getString("action") != null && extra.getString("action").equals("login"))
+        {
             username = extra.getString("username");
             password = extra.getString("password");
             geoloc = extra.getString("geoloc");
+            login();
+        }
 
-            socket.on("register", onRegister);
-            socket.on("message", onMessage);
-            socket.connect();
-
-            JSONObject registerjson = new JSONObject();
-            try {
-                registerjson.put("username", username);
-                registerjson.put("password", password);
-                registerjson.put("geoloc", geoloc);
-            } catch (Exception e) {
-                Toast.makeText(this, "Error putting together registration data", Toast.LENGTH_SHORT).show();
-                Log.e("StackFrame", e.getStackTrace().toString());
-                e.printStackTrace();
-            }
-            socket.emit("register", registerjson);
+        else if(extra.getString("action") != null && extra.getString("action").equals("register"))
+        {
+            username = extra.getString("username");
+            password = extra.getString("password");
+            geoloc = extra.getString("geoloc");
+            register();
         }
         else
         {
@@ -132,30 +143,67 @@ public class StackFrameChat extends Service
         return mStartMode;
     }
 
-    private Emitter.Listener onRegister = new Emitter.Listener() {
+    private Emitter.Listener onConnect = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(StackFrameChat.this, "Connected...", Toast.LENGTH_SHORT).show();
+                    if (!loginInfo.getString("token", "").equals("")) {
+                        username = loginInfo.getString("username", "");
+                        password = loginInfo.getString("password", "");
+                        geoloc = loginInfo.getString("geoloc", "");
+                        token = loginInfo.getString("token", "");
+                        reconnect();
+                    } else {
+                        Log.d("StackFrame-Backend", "No Login Information stored.");
+                    }
+                }
+            });
+        }
+    };
+
+    private Emitter.Listener onLogin = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
              handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    JSONObject data = (JSONObject) args[0];
-                    //String username;
+                 @Override
+                 public void run() {
+                     JSONObject data = (JSONObject) args[0];
+                     //String username;
 
-                    try {
-                        serverid = data.getString("serverid");
-                        token = data.getString("token");
-                    } catch (JSONException e) {
-                        Toast.makeText(StackFrameChat.this, "Something wrong with the registration I got...", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    Toast.makeText(StackFrameChat.this, "Got token: " + token, Toast.LENGTH_SHORT).show();
+                     try {
+                         if (data.getString("token").equals("-1")) {
+                             Toast.makeText(StackFrameChat.this, "Invalid login information", Toast.LENGTH_SHORT).show();
+                             Log.v("StackFrame-Backend", "Invalid login information. Received a -1 token value.");
+                             Intent intent = new Intent("failedLogin");
+                             LocalBroadcastManager.getInstance(StackFrameChat.this).sendBroadcast(intent);
+                             return;
+                         }
 
-                    chat = new Intent(StackFrameChat.this, ChatActivity.class);
-                    chat.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(chat);
-
-                }
-            });
+                         serverid = data.getInt("serverid");
+                         token = data.getString("token");
+                         socketid = data.getString("socket");
+                         loginEditor.putInt("serverid", serverid);
+                         loginEditor.putString("token", token);
+                         loginEditor.putString("username", username);
+                         loginEditor.putString("socket", socketid);
+                         loginEditor.commit();
+                     } catch (JSONException e) {
+                         Toast.makeText(StackFrameChat.this, "Something wrong with the registration I got...", Toast.LENGTH_SHORT).show();
+                         Log.w("StackFrame-Backend", "!!Got Registration: " + data.toString());
+                         Log.w("StackFrame-Backend", e.getStackTrace().toString());
+                         e.printStackTrace();
+                         return;
+                     }
+                     //Toast.makeText(StackFrameChat.this, "Got token: " + token, Toast.LENGTH_SHORT).show();
+                     Log.d("StackFrame-Backend", "Got Registration: " + data.toString());
+                     chat = new Intent(StackFrameChat.this, ChatActivity.class);
+                     chat.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                     startActivity(chat);
+                 }
+             });
         }
     };
 
@@ -173,10 +221,35 @@ public class StackFrameChat extends Service
                         text = data.getString("text");
                     } catch (JSONException e) {
                         Toast.makeText(StackFrameChat.this, "Something wrong with the message I got...", Toast.LENGTH_SHORT).show();
+                        Log.d("StackFrame-Backend", "Something wrong with the message I got..." + args[0].toString());
                         return;
                     }
                     //Toast.makeText(StackFrameChat.this, "Got message: " + text, Toast.LENGTH_SHORT).show();
-                    sendResult(data);
+                    sendResult("message", data);
+                }
+            });
+        }
+    };
+
+    private Emitter.Listener onPrivate = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject data = (JSONObject) args[0];
+                    String username;
+                    String text = "";
+                    try {
+                        username = data.getString("username");
+                        text = data.getString("text");
+                    } catch (JSONException e) {
+                        Toast.makeText(StackFrameChat.this, "Something wrong with the message I got...", Toast.LENGTH_SHORT).show();
+                        Log.d("StackFrame-Backend", "Something wrong with the message I got..." + args[0].toString());
+                        return;
+                    }
+                    //Toast.makeText(StackFrameChat.this, "Got message: " + text, Toast.LENGTH_SHORT).show();
+                    sendResult("private", data);
                 }
             });
         }
@@ -206,10 +279,65 @@ public class StackFrameChat extends Service
         return null;
     }
 
-    public void sendResult(JSONObject message) {
+    public void sendResult(String action, JSONObject message) {
         Intent intent = new Intent("incomingMessage");
-        // You can also include some extra data.
+        intent.putExtra("action", action);
         intent.putExtra("message", message.toString());
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    private void login()
+    {
+        Toast.makeText(this, "Sending Login Info to Server", Toast.LENGTH_SHORT).show();
+
+        JSONObject registerjson = new JSONObject();
+        try {
+            registerjson.put("username", username);
+            registerjson.put("password", password);
+            registerjson.put("geoloc", geoloc);
+        } catch (Exception e) {
+            Toast.makeText(this, "Error putting together login data", Toast.LENGTH_SHORT).show();
+            Log.e("StackFrame-Backend", e.getStackTrace().toString());
+            e.printStackTrace();
+        }
+        socket.emit("login", registerjson);
+    }
+
+    private void register()
+    {
+        Toast.makeText(this, "Sending Registration Info to Server", Toast.LENGTH_SHORT).show();
+
+        JSONObject registerjson = new JSONObject();
+        try {
+            registerjson.put("username", username);
+            registerjson.put("password", password);
+            registerjson.put("geoloc", geoloc);
+        } catch (Exception e) {
+            Toast.makeText(this, "Error putting together registration data", Toast.LENGTH_SHORT).show();
+            //Log.e("StackFrame-Backend", e.getStackTrace().toString());
+            e.printStackTrace();
+        }
+        socket.emit("register", registerjson);
+    }
+
+    private void reconnect()
+    {
+        Toast.makeText(this, "Reconnecting to server", Toast.LENGTH_SHORT).show();
+
+        JSONObject registerjson = new JSONObject();
+        try {
+            registerjson.put("username", username);
+            registerjson.put("token", token);
+            registerjson.put("geoloc", geoloc);
+            registerjson.put("serverid", serverid);
+        } catch (Exception e) {
+            Toast.makeText(this, "Error putting together registration data", Toast.LENGTH_SHORT).show();
+            //Log.e("StackFrame-Backend", e.getStackTrace().toString());
+            e.printStackTrace();
+        }
+        Log.d("StackFrame-Backend", "Sending reconnect info now...");
+        socket.emit("relogin", registerjson);
+        //password = "password";
+        //login();
     }
 }

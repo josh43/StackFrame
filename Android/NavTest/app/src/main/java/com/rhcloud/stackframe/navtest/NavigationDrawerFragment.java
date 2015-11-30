@@ -70,6 +70,7 @@ public class NavigationDrawerFragment extends Fragment {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
 
+
         if (savedInstanceState != null) {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
             mFromSavedInstanceState = true;
@@ -131,6 +132,7 @@ public class NavigationDrawerFragment extends Fragment {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
+        actionBar.setIcon(R.drawable.ic_drawer);
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the navigation drawer and the action bar app icon.
@@ -147,7 +149,7 @@ public class NavigationDrawerFragment extends Fragment {
                 if (!isAdded()) {
                     return;
                 }
-
+                mDrawerToggle.setHomeAsUpIndicator(R.drawable.ic_drawer);
                 getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
 
@@ -171,11 +173,13 @@ public class NavigationDrawerFragment extends Fragment {
             }
         };
 
+
+
         // If the user hasn't 'learned' about the drawer, open it to introduce them to the drawer,
         // per the navigation drawer design guidelines.
-        if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
-            mDrawerLayout.openDrawer(mFragmentContainerView);
-        }
+        //if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
+         //   mDrawerLayout.openDrawer(mFragmentContainerView);
+        //}
 
         // Defer code dependent on restoration of previous instance state.
         mDrawerLayout.post(new Runnable() {

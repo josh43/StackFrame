@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -51,6 +52,8 @@ public class ChatActivity extends ActionBarActivity
     boolean newMessage = false;
     BroadcastReceiver mMessageReceiver;
     LocalBroadcastManager broadcast;
+    SharedPreferences loginInfo;
+    SharedPreferences.Editor loginEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,9 @@ public class ChatActivity extends ActionBarActivity
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_drawer);
+
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
@@ -69,6 +75,9 @@ public class ChatActivity extends ActionBarActivity
         chatView = (ListView) findViewById(R.id.chatView);
 
         chat.add(new Message("Application", "None", "text", (new Date()).getTime() + "", "Welcome to StackFrame!", "0"));
+
+        loginInfo = getApplication().getSharedPreferences("loginInfo", MODE_PRIVATE);
+        loginEditor = loginInfo.edit();
 
         message = (EditText) findViewById(R.id.message);
         send = (Button) findViewById(R.id.send);
@@ -79,7 +88,7 @@ public class ChatActivity extends ActionBarActivity
                 String output =  message.getText().toString();
                 message.setText("");
                 sendResult(output);
-                Log.d("StackFrame UI", "Recieved send button press, initiating message send.");
+                Log.d("StackFrame UI", "Received send button press, initiating message send.");
             }
         });
 
@@ -92,27 +101,53 @@ public class ChatActivity extends ActionBarActivity
             public void onReceive(Context context, Intent intent) {
                 // Get extra data included in the Intent
 
-                String message = intent.getStringExtra("message");
-                try {
-                    JSONObject data = new JSONObject(message);
-                    chat.add(new Message(data.getString("username"), data.getString("token"), data.getString("type"), data.getString("date"), data.getString("text"), data.getString("serverid")));
-                    arrayAdapter.notifyDataSetChanged();
-                    if(chatView.getLastVisiblePosition() == chat.size() - 2)
-                    {
-                        chatView.smoothScrollToPosition(chat.size() - 1);
+                if(intent.getStringExtra("action").equals("message")) {
+                    String message = intent.getStringExtra("message");
+                    try {
+                        JSONObject data = new JSONObject(message);
+                        chat.add(new Message(data.getString("username"), data.getString("token"), data.getString("type"), data.getString("date"), data.getString("text"), data.getString("serverid")));
+                        arrayAdapter.notifyDataSetChanged();
+                        if (chatView.getLastVisiblePosition() == chat.size() - 2) {
+                            chatView.smoothScrollToPosition(chat.size() - 1);
+                        } else {
+                            Log.d("StackFrame-Backend", "Position of listview is not at the end, not scrolling to bottom: " + chatView.getLastVisiblePosition() + "/" + chat.size());
+                        }
+                    } catch (Exception e) {
+                        //Toast.makeText(ChatActivity.this, "Something wrong with the message data", Toast.LENGTH_SHORT).show();
+                        Log.w("StackFrame UI", "Something wrong with message data: " + message);
                     }
-                    else
-                    {
-                        Log.d("StackFrame-Backend", "Position of listview is not at the end, not scrolling to bottom: " + chatView.getLastVisiblePosition() + "/" + chat.size() );
-                    }
-                } catch (Exception e) {
-                    Toast.makeText(ChatActivity.this, "Something wrong with the message data", Toast.LENGTH_SHORT).show();
+                    Log.d("StackFrame-UI", "Got message: " + message);
+                    //Toast.makeText(ChatActivity.this, "Got a message: " + message, Toast.LENGTH_SHORT).show();
                 }
-                Log.d("StackFrame-UI", "Got message: " + message);
-                //Toast.makeText(ChatActivity.this, "Got a message: " + message, Toast.LENGTH_SHORT).show();
+                else if(intent.getStringExtra("action").equals("private"))
+                {
+                    String message = intent.getStringExtra("message");
+                    try {
+                        JSONObject data = new JSONObject(message);
+                        chat.add(new Message(data.getString("username"), data.getString("token"), data.getString("type"), data.getString("date"), "PRIVATE: " + data.getString("text"), data.getString("serverid")));
+                        arrayAdapter.notifyDataSetChanged();
+                        if (chatView.getLastVisiblePosition() == chat.size() - 2) {
+                            chatView.smoothScrollToPosition(chat.size() - 1);
+                        } else {
+                            Log.d("StackFrame-Backend", "Position of listview is not at the end, not scrolling to bottom: " + chatView.getLastVisiblePosition() + "/" + chat.size());
+                        }
+                    } catch (Exception e) {
+                        //Toast.makeText(ChatActivity.this, "Something wrong with the message data", Toast.LENGTH_SHORT).show();
+                        Log.w("StackFrame UI", "Something wrong with message data: " + message);
+                    }
+                    Log.d("StackFrame-UI", "Got message: " + message);
+                    //Toast.makeText(ChatActivity.this, "Got a message: " + message, Toast.LENGTH_SHORT).show();
+                }
             }
         };
+        //Log.d("StackFrame UI", "View height (listview): " + chatView.getHeight());
+        //Log.d("StackFrame UI", "View height (container): " + findViewById(R.id.container).getHeight());
+        //Log.d("StackFrame UI", "View height (layout): " + findViewById(R.id.drawer_layout).getHeight());
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("incomingMessage"));
+
+
+        //chatView.setMinimumHeight(findViewById(R.id.drawer_layout).getHeight() - getSupportActionBar().getHeight());
+        //Log.d("StackFrame UI", "View height (chatview): " + (findViewById(R.id.drawer_layout).getHeight() - getSupportActionBar().getHeight()));
     }
 
     @Override
@@ -127,13 +162,17 @@ public class ChatActivity extends ActionBarActivity
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-                mTitle = getString(R.string.title_section1);
+                //mTitle = getString(R.string.title_section1);
+                //Toast.makeText(ChatActivity.this, "Showing Profile...", Toast.LENGTH_SHORT).show();
+                showProfile();
                 break;
             case 2:
-                mTitle = getString(R.string.title_section2);
+                //mTitle = getString(R.string.title_section2);
+                showSettings();
                 break;
             case 3:
-                mTitle = getString(R.string.title_section3);
+                //mTitle = getString(R.string.title_section3);
+                logOut();
                 break;
         }
     }
@@ -226,6 +265,29 @@ public class ChatActivity extends ActionBarActivity
         intent.putExtra("message", message);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         Log.d("StackFrame UI", "Message sent to backend.");
+    }
+
+    private void showProfile()
+    {
+
+    }
+
+    private void showSettings()
+    {
+
+    }
+
+    private void logOut()
+    {
+        Toast.makeText(this, "Logging out...", Toast.LENGTH_SHORT).show();
+        loginEditor.putString("serverid", "");
+        loginEditor.putString("username", "");
+        loginEditor.putString("token", "");
+        loginEditor.putString("geoloc", "");
+        loginEditor.commit();
+
+        Intent login = new Intent(this, Login.class);
+        startActivity(login);
     }
 
 }
