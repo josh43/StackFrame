@@ -79,8 +79,10 @@
     [chatSocket on:@"message" callback:^(NSArray* data, SocketAckEmitter* ack) {
         NSLog(@"\n\nMESSAGE CALLBACK\n\n");
         
-        SFMessage * messageToAdd = [[SFMessage alloc]initChatMessageWithString:@"HELLO"];
-        [self.messages addObject:messageToAdd];
+        id json = data[0];
+        
+        SFMessage * messageToAdd = [[SFMessage alloc]initChatMessageWithString:[json objectForKey:@"text"]];
+        [self.myStore.messageStore addObject:messageToAdd];
         [self.tableView reloadData];
         NSLog(@"\n\nRELOAD TABLE\n\n");
     }];
@@ -154,8 +156,6 @@ NSArray *cells = [self.tableView visibleCells];
     switch (_phone_type) {
         case IPHONE6: {
             
-        
-            
             UIImageView * theView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 375, 65)];
             _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 65, 375, 544)];
             // this if for iphone 6
@@ -198,9 +198,6 @@ NSArray *cells = [self.tableView visibleCells];
 
     
     //_stackFrameTopBar.bounds = CGRectMake(0, 0, 250, 127);
-    
-
-
 
     _composeIcon = [[UIImage alloc]initWithContentsOfFile:[NSString stringWithFormat:@"%@%@%@", dir,@"Compose",magnification]];
     if(!_composeIcon){
@@ -209,6 +206,8 @@ NSArray *cells = [self.tableView visibleCells];
     }
     _worldIcon = [[UIImage alloc]initWithContentsOfFile:[NSString stringWithFormat:@"%@%@%@", dir,@"World",magnification]];
     _cameraIcon = [[UIImage alloc]initWithContentsOfFile:[NSString stringWithFormat:@"%@%@%@", dir,@"Camera",magnification]];
+    
+    //TODO
     _middleFingerIcon= [[UIImage alloc]initWithContentsOfFile:[NSString stringWithFormat:@"%@%@%@", dir,@"mfinger",magnification]];
     _coolBrahIcon = [[UIImage alloc]initWithContentsOfFile:[NSString stringWithFormat:@"%@%@%@", dir,@"coolbra", magnification]];
     _commentIcon = [[UIImage alloc]initWithContentsOfFile:[NSString stringWithFormat:@"%@%@%@", dir,@"Chat",magnification]];
@@ -229,13 +228,7 @@ NSArray *cells = [self.tableView visibleCells];
         
     }if(!_commentIcon){
         NSLog(@"Error loading _commentIcon icon\n");
-        
     }
-    
-        
-    
-    
-    
 }
 
 
