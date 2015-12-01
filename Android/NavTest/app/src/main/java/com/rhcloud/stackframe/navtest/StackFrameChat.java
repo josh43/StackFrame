@@ -62,6 +62,7 @@ public class StackFrameChat extends Service
     @Override
     public void onCreate() {
         loginInfo = getApplicationContext().getSharedPreferences("loginInfo", MODE_PRIVATE);
+        token = loginInfo.getString("token", "");
         loginEditor = loginInfo.edit();
     }
 
@@ -281,12 +282,20 @@ public class StackFrameChat extends Service
                             LocalBroadcastManager.getInstance(StackFrameChat.this).sendBroadcast(intent);
                             return;
                         }
+                        else
+                        {
+                            loginEditor.putString("token", data.getString("token"));
+                            token = data.getString("token");
+                            loginEditor.commit();
+                            Log.v("StackFrame-Backend", "Valid login. Updated user preferences");
+                        }
                     } catch (JSONException e) {
                         Toast.makeText(StackFrameChat.this, "Something wrong with the message I got...", Toast.LENGTH_SHORT).show();
                         Log.d("StackFrame-Backend", "Something wrong with the message I got..." + args[0].toString());
                         return;
                     }
                     //Toast.makeText(StackFrameChat.this, "Got message: " + text, Toast.LENGTH_SHORT).show();
+
                     sendResult("register", data);
                     chat = new Intent(StackFrameChat.this, ChatActivity.class);
                     chat.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

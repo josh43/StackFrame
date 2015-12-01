@@ -26,6 +26,7 @@ public class BubbleAdapter extends BaseAdapter {
 
     ArrayList<Message> list = new ArrayList<>();
     Context context;
+    ArrayList<Bitmap> avatarCache;
     private static LayoutInflater inflater = null;
 
     public BubbleAdapter(Activity mainActivity, ArrayList<Message> messages)
@@ -33,6 +34,7 @@ public class BubbleAdapter extends BaseAdapter {
         list = messages;
         context = mainActivity;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        avatarCache = new ArrayList<Bitmap>();
     }
 
     public int getCount()
@@ -59,7 +61,14 @@ public class BubbleAdapter extends BaseAdapter {
         bubble.date = (TextView) row.findViewById(R.id.date);
         bubble.layout = (LinearLayout) row.findViewById(R.id.chatlayout);
         bubble.avatar = (ImageView) row.findViewById(R.id.imageView);
-        new DownloadImageTask(bubble.avatar).execute("http://nodejs-stackframe.rhcloud.com/img" + list.get(position).getAvatar());
+        if(list.get(position).getUsername().equals("Application") || list.get(position).getUsername().equals("SERVER"))
+        {
+            bubble.avatar.setImageResource(R.mipmap.ic_launcher);
+        }
+        else
+        {
+            new DownloadImageTask(bubble.avatar).execute("http://nodejs-stackframe.rhcloud.com/img" + list.get(position).getAvatar());
+        }
         bubble.text.setText(list.get(position).getText());
         bubble.date.setText(cleanDate(list.get(position).getDate())); //Do date cleaning here
         bubble.layout.setMinimumWidth( parent.getWidth() );
@@ -119,6 +128,16 @@ public class BubbleAdapter extends BaseAdapter {
 
         protected Bitmap doInBackground(String... urls) {
             String urldisplay = urls[0];
+            /*int index = Integer.parseInt(urldisplay.substring(urldisplay.length() - 2, urldisplay.length() - 1));
+            if(avatarCache.get(index) != null)
+            {
+                Log.v("StackFrame-UI", "Image " + index + " found in cache");
+                return avatarCache.get(index);
+            }
+            else
+            {
+                Log.v("StackFrame-UI", "No image in cache. Loading from server.");
+            }*/
             Bitmap mIcon11 = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
             try {
                 InputStream in = new java.net.URL(urldisplay).openStream();
@@ -127,6 +146,7 @@ public class BubbleAdapter extends BaseAdapter {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
+            //avatarCache.add(index, mIcon11);
             return mIcon11;
         }
 

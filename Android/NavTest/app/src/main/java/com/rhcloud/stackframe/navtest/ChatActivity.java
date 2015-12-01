@@ -59,6 +59,7 @@ public class ChatActivity extends ActionBarActivity
     LocalBroadcastManager broadcast;
     SharedPreferences loginInfo;
     SharedPreferences.Editor loginEditor;
+    ArrayList<Bitmap> avatarCache;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,8 @@ public class ChatActivity extends ActionBarActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setLogo(R.drawable.ic_drawer);
+
+        avatarCache = new ArrayList<Bitmap>();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -120,6 +123,7 @@ public class ChatActivity extends ActionBarActivity
                     } catch (Exception e) {
                         //Toast.makeText(ChatActivity.this, "Something wrong with the message data", Toast.LENGTH_SHORT).show();
                         Log.w("StackFrame UI", "Something wrong with message data: " + message);
+                        e.printStackTrace();
                     }
                     Log.d("StackFrame-UI", "Got message: " + message);
                     //Toast.makeText(ChatActivity.this, "Got a message: " + message, Toast.LENGTH_SHORT).show();
@@ -139,6 +143,7 @@ public class ChatActivity extends ActionBarActivity
                     } catch (Exception e) {
                         //Toast.makeText(ChatActivity.this, "Something wrong with the message data", Toast.LENGTH_SHORT).show();
                         Log.w("StackFrame UI", "Something wrong with message data: " + message);
+                        e.printStackTrace();
                     }
                     Log.d("StackFrame-UI", "Got message: " + message);
                     //Toast.makeText(ChatActivity.this, "Got a message: " + message, Toast.LENGTH_SHORT).show();

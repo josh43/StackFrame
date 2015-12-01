@@ -64,6 +64,7 @@ public class Login extends AppCompatActivity {
     int shortAnimation = 100;
     Dialog imageSelect;
     ArrayList<ImageView> avatars;
+    ArrayList<Bitmap> avatarCache;
     int rowSize = 2;
 
     @Override
@@ -74,6 +75,7 @@ public class Login extends AppCompatActivity {
         overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_popup_enter);
 
         avatars = new ArrayList<ImageView>();
+        avatarCache = new ArrayList<Bitmap>();
 
         setTitle("");
         this.setTitleColor(getResources().getColor(R.color.fontColor));
@@ -242,10 +244,10 @@ public class Login extends AppCompatActivity {
                     }
                 });
                 loginShrink.start();
-                loginService.putExtra("action", "register");
-                loginService.putExtra("username", usernameView.getText().toString());
-                loginService.putExtra("password", passwordView.getText().toString());
-                loginService.putExtra("geoloc", "location");
+                //loginService.putExtra("action", "register");
+                //loginService.putExtra("username", usernameView.getText().toString());
+                //loginService.putExtra("password", passwordView.getText().toString());
+                //loginService.putExtra("geoloc", "location");
             }
         });
 
@@ -345,7 +347,7 @@ public class Login extends AppCompatActivity {
         TableRow row = new TableRow(this);
 
         if(base.getChildCount() == 0) {
-
+            Log.v("StackFrame-UI", "Not enough children in dialog, building new: " + base.getChildCount());
             for (int i = 1; i < count; i++) {
                 if (i % rowSize == 1) {
                     row = new TableRow(this);
@@ -382,6 +384,10 @@ public class Login extends AppCompatActivity {
                 base.addView(row);
             }
         }
+        else
+        {
+            Log.v("StackFrame-UI", "View already has children, showing existing dialog with children: " + base.getChildCount());
+        }
 
         imageSelect.show();
     }
@@ -395,6 +401,16 @@ public class Login extends AppCompatActivity {
 
         protected Bitmap doInBackground(String... urls) {
             String urldisplay = urls[0];
+           /* int index = Integer.parseInt(urldisplay.substring(urldisplay.length() - 2, urldisplay.length() - 1));
+            if(avatarCache.get(index) != null)
+            {
+                Log.v("StackFrame-UI", "Image " + index + " found in cache");
+                return avatarCache.get(index);
+            }
+            else
+            {
+                Log.v("StackFrame-UI", "No image in cache. Loading from server.");
+            }*/
             Bitmap mIcon11 = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
             try {
                 InputStream in = new java.net.URL(urldisplay).openStream();
@@ -403,6 +419,7 @@ public class Login extends AppCompatActivity {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
+           // avatarCache.add(index, mIcon11);
             return mIcon11;
         }
 
