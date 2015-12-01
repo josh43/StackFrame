@@ -25,6 +25,29 @@
     UIColor * col= [UIColor colorWithRed:r green:g blue:b alpha:1.0f];
     self.view.backgroundColor =  col;
     // Do any additional setup after loading the view from its nib.
+    
+    [chatSocket on:@"register" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        
+        NSLog(@"\n\nREGISTER CALLBACK\n\n");
+        
+        id json = data[0];
+        
+        NSLog(@"\n\n\nDATA: %@\n\n\n", data);
+        
+        if ([[NSString stringWithFormat:@"%@",[json objectForKey:@"token"]] isEqualToString:@"-1"]) {
+            [self alertStatus:@"Username is in use" :@"Sign up Failed!" :0];
+        }else{
+            
+            NSString * strongPointa = [[NSString alloc]initWithString:_userNameField.text];
+            NSString * passWord = [[NSString alloc]initWithString:_passwordTwoField.text];
+            [_userNameField resignFirstResponder];
+            [_passwordOneField resignFirstResponder];
+            [_passwordTwoField resignFirstResponder];
+            //Code that presents or dismisses a view controller here
+            [_delegate appDoneRegistering:self :strongPointa :passWord];
+        }
+        
+    }];
 }
 - (IBAction)signUp:(id)sender {
     NSLog(@"signUp \n");
@@ -37,27 +60,6 @@
         
         [self alertStatus:@"Please enter Username and Password" :@"Sign up Failed!" :0];
     }else{
-    
-    [chatSocket on:@"register" callback:^(NSArray* data, SocketAckEmitter* ack) {
-        
-        id json = data[0];
-        if ((long)[json objectForKey:@"token"] != -1) {
-        
-            NSLog(@"\n\nREGISTER CALLBACK\n\n");
-            NSString * strongPointa = [[NSString alloc]initWithString:_userNameField.text];
-            NSString * passWord = [[NSString alloc]initWithString:_passwordTwoField.text];
-            [_userNameField resignFirstResponder];
-            [_passwordOneField resignFirstResponder];
-            [_passwordTwoField resignFirstResponder];
-            //Code that presents or dismisses a view controller here
-            [_delegate appDoneRegistering:self :strongPointa :passWord];
-            
-        }else{
-            [self alertStatus:@"Username is in use" :@"Sign up Failed!" :0];
-        }
-        
-    }];
-    
     
         NSLog(@"\n\nREGISTER\n\n");
     
