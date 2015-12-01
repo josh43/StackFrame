@@ -107,7 +107,7 @@ public class StackFrameChat extends Service
             username = extra.getString("username");
             password = extra.getString("password");
             geoloc = extra.getString("geoloc");
-            avatar = extra.getString("avatar");
+            avatar = extra.getInt("avatar") + "";
             register();
         }
         else if(extra.getString("action") != null && extra.getString("action").equals("numberAvatars"))

@@ -10,14 +10,16 @@ public class Message {
     String date;
     String text;
     String serverid;
+    String avatar;
 
-    public Message(String username, String token, String type, String date, String text, String serverid)
+    public Message(String username, String token, String type, String date, String text, String serverid, String avatar)
     {
         this.username = username;
         this.token = token;
         this.date = date;
         this.text = text;
         this.serverid = serverid;
+        this.avatar = avatar;
 
         if(type.equals("text"))
             this.type = Type.TEXT;
@@ -56,6 +58,8 @@ public class Message {
     {
         return serverid;
     }
+
+    public String getAvatar() {return avatar; }
 }
 
 enum Type

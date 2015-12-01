@@ -64,6 +64,7 @@ public class Login extends AppCompatActivity {
     int shortAnimation = 100;
     Dialog imageSelect;
     ArrayList<ImageView> avatars;
+    int rowSize = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -316,7 +317,7 @@ public class Login extends AppCompatActivity {
 
         for(int i = 1; i <= count; i++)
         {
-            if(i % 2 == 1)
+            if(i % rowSize == 1)
             {
                 row = new TableRow(this);
             }
@@ -325,8 +326,8 @@ public class Login extends AppCompatActivity {
             tempView.setImageResource(R.mipmap.ic_launcher);
             new DownloadImageTask(tempView).execute("http://nodejs-stackframe.rhcloud.com/img" + i);
             tempView.setVisibility(View.VISIBLE);
-            tempView.setMaxWidth(base.getWidth() / 2);
-            tempView.setMinimumHeight(base.getWidth() / 2);
+            tempView.setMaxWidth(base.getWidth() / rowSize);
+            tempView.setMinimumHeight(base.getWidth() / rowSize);
             tempView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -342,7 +343,7 @@ public class Login extends AppCompatActivity {
             row.addView(tempView);
             base.invalidate();
 
-            if(i % 2 == 0)
+            if(i % rowSize == 0)
             {
                 base.addView(row);
             }

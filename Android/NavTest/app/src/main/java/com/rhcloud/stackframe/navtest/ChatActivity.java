@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -21,11 +24,13 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -74,7 +79,7 @@ public class ChatActivity extends ActionBarActivity
 
         chatView = (ListView) findViewById(R.id.chatView);
 
-        chat.add(new Message("Application", "None", "text", (new Date()).getTime() + "", "Welcome to StackFrame!", "0"));
+        chat.add(new Message("Application", "None", "text", (new Date()).getTime() + "", "Welcome to StackFrame!", "0", "1"));
 
         loginInfo = getApplication().getSharedPreferences("loginInfo", MODE_PRIVATE);
         loginEditor = loginInfo.edit();
@@ -105,7 +110,7 @@ public class ChatActivity extends ActionBarActivity
                     String message = intent.getStringExtra("message");
                     try {
                         JSONObject data = new JSONObject(message);
-                        chat.add(new Message(data.getString("username"), data.getString("token"), data.getString("type"), data.getString("date"), data.getString("text"), data.getString("serverid")));
+                        chat.add(new Message(data.getString("username"), data.getString("token"), data.getString("type"), data.getString("date"), data.getString("text"), data.getString("serverid"), data.getString("avatar")));
                         arrayAdapter.notifyDataSetChanged();
                         if (chatView.getLastVisiblePosition() == chat.size() - 2) {
                             chatView.smoothScrollToPosition(chat.size() - 1);
@@ -124,7 +129,7 @@ public class ChatActivity extends ActionBarActivity
                     String message = intent.getStringExtra("message");
                     try {
                         JSONObject data = new JSONObject(message);
-                        chat.add(new Message(data.getString("username"), data.getString("token"), data.getString("type"), data.getString("date"), "PRIVATE: " + data.getString("text"), data.getString("serverid")));
+                        chat.add(new Message(data.getString("username"), data.getString("token"), data.getString("type"), data.getString("date"), "PRIVATE: " + data.getString("text"), data.getString("serverid"), data.getString("avatar")));
                         arrayAdapter.notifyDataSetChanged();
                         if (chatView.getLastVisiblePosition() == chat.size() - 2) {
                             chatView.smoothScrollToPosition(chat.size() - 1);
@@ -293,5 +298,4 @@ public class ChatActivity extends ActionBarActivity
         Intent login = new Intent(this, Login.class);
         startActivity(login);
     }
-
 }
