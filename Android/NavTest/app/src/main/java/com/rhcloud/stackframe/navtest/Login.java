@@ -253,16 +253,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if(intent.getStringExtra("action") != null && intent.getStringExtra("action").equals("growFields")) {
-                    loadingBar.setVisibility(View.GONE);
-                    usernameView.setScaleX(1f);
-                    loginView.setScaleX(1f);
-                    registerView.setScaleX(1f);
-                    passwordView.setScaleX(1f);
-                    loadingBar.setVisibility(View.GONE);
-                    usernameView.setVisibility(View.VISIBLE);
-                    loginView.setVisibility(View.VISIBLE);
-                    registerView.setVisibility(View.VISIBLE);
-                    passwordView.setVisibility(View.VISIBLE);
+                    growFields();
                 }
                 else if(intent.getStringExtra("action").equals("numberAvatars"))
                 {
@@ -270,9 +261,33 @@ public class Login extends AppCompatActivity {
                     Log.v("StackFrame-UI", "Time to load all " + ((int) intent.getIntExtra("message", 0)) + " avatars");
                     inflateImageSelect(((int) intent.getIntExtra("message", 0)));
                 }
+                else if(intent.getStringExtra("action").equals("failedRegister"))
+                {
+                    Toast.makeText(Login.this, "User Exists", Toast.LENGTH_SHORT).show();
+                    Log.v("StackFrame-UI", "Error creating user, suspect that it already exists");
+                    imageSelect.dismiss();
+                    growFields();
+                    //inflateImageSelect(((int) intent.getIntExtra("message", 0)));
+                }
+                else if(intent.getStringExtra("action").equals("register"))
+                {
+                    Toast.makeText(Login.this, "Profile created", Toast.LENGTH_SHORT).show();
+                    Log.v("StackFrame-UI", "New profile created");
+                    imageSelect.dismiss();
+                    //inflateImageSelect(((int) intent.getIntExtra("message", 0)));
+                }
+                else if(intent.getStringExtra("action").equals("failedLogin"))
+                {
+                    Toast.makeText(Login.this, "Invalid login", Toast.LENGTH_SHORT).show();
+                    Log.v("StackFrame-UI", "Error logging in");
+                    //imageSelect.dismiss();
+                    growFields();
+                    //inflateImageSelect(((int) intent.getIntExtra("message", 0)));
+                }
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("failedLogin"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("failedRegister"));
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("numberAvatars"));
     }
 
@@ -306,6 +321,20 @@ public class Login extends AppCompatActivity {
         //overridePendingTransition(R.anim.abc_popup_enter, R.anim.abc_shrink_fade_out_from_bottom);
     }
 
+    private void growFields()
+    {
+        loadingBar.setVisibility(View.GONE);
+        usernameView.setScaleX(1f);
+        loginView.setScaleX(1f);
+        registerView.setScaleX(1f);
+        passwordView.setScaleX(1f);
+        loadingBar.setVisibility(View.GONE);
+        usernameView.setVisibility(View.VISIBLE);
+        loginView.setVisibility(View.VISIBLE);
+        registerView.setVisibility(View.VISIBLE);
+        passwordView.setVisibility(View.VISIBLE);
+    }
+
     private void inflateImageSelect(int count)
     {
         imageSelect = new Dialog(this);
@@ -315,44 +344,43 @@ public class Login extends AppCompatActivity {
         TableLayout base = (TableLayout) imageSelect.findViewById(R.id.dialogBase);
         TableRow row = new TableRow(this);
 
-        for(int i = 1; i <= count; i++)
-        {
-            if(i % rowSize == 1)
-            {
-                row = new TableRow(this);
+        if(base.getChildCount() == 0) {
+
+            for (int i = 1; i < count; i++) {
+                if (i % rowSize == 1) {
+                    row = new TableRow(this);
+                }
+
+                final ImageView tempView = new ImageView(this);
+                tempView.setImageResource(R.mipmap.ic_launcher);
+                new DownloadImageTask(tempView).execute("http://nodejs-stackframe.rhcloud.com/img" + i);
+                tempView.setVisibility(View.VISIBLE);
+                tempView.setMaxWidth(base.getWidth() / rowSize);
+                tempView.setMinimumHeight(base.getWidth() / rowSize);
+                tempView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        loginService.putExtra("action", "register");
+                        loginService.putExtra("username", usernameView.getText().toString());
+                        loginService.putExtra("password", passwordView.getText().toString());
+                        loginService.putExtra("geoloc", "location");
+                        loginService.putExtra("avatar", avatars.indexOf(tempView) + 1);
+                        startService(loginService);
+                    }
+                });
+                avatars.add(tempView);
+                row.addView(tempView);
+                base.invalidate();
+
+                if (i % rowSize == 0) {
+                    base.addView(row);
+                }
+                Log.v("StackFrame-UI", "Loaded item: " + i);
             }
 
-            final ImageView tempView = new ImageView(this);
-            tempView.setImageResource(R.mipmap.ic_launcher);
-            new DownloadImageTask(tempView).execute("http://nodejs-stackframe.rhcloud.com/img" + i);
-            tempView.setVisibility(View.VISIBLE);
-            tempView.setMaxWidth(base.getWidth() / rowSize);
-            tempView.setMinimumHeight(base.getWidth() / rowSize);
-            tempView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    loginService.putExtra("action", "register");
-                    loginService.putExtra("username", usernameView.getText().toString());
-                    loginService.putExtra("password", passwordView.getText().toString());
-                    loginService.putExtra("geoloc", "location");
-                    loginService.putExtra("avatar", avatars.indexOf(tempView) + 1);
-                    startService(loginService);
-                }
-            });
-            avatars.add(tempView);
-            row.addView(tempView);
-            base.invalidate();
-
-            if(i % rowSize == 0)
-            {
+            if (count % 2 == 1) {
                 base.addView(row);
             }
-            Log.v("StackFrame-UI", "Loaded item: " + i);
-        }
-
-        if(count % 2 == 1)
-        {
-            base.addView(row);
         }
 
         imageSelect.show();

@@ -82,6 +82,7 @@ public class StackFrameChat extends Service
                 }
                 else Log.d("StackFrame Backend", "Using the url: " + serverurl);
                 socket = IO.socket(serverurl);
+                socket.on("register", onRegister);
                 socket.on("login", onLogin);
                 socket.on("message", onMessage);
                 socket.on("ready", onConnect);
@@ -185,6 +186,7 @@ public class StackFrameChat extends Service
                              Toast.makeText(StackFrameChat.this, "Invalid login information", Toast.LENGTH_SHORT).show();
                              Log.v("StackFrame-Backend", "Invalid login information. Received a -1 token value.");
                              Intent intent = new Intent("failedLogin");
+                             intent.putExtra("action", "failedLogin");
                              LocalBroadcastManager.getInstance(StackFrameChat.this).sendBroadcast(intent);
                              return;
                          }
@@ -257,6 +259,38 @@ public class StackFrameChat extends Service
                     }
                     //Toast.makeText(StackFrameChat.this, "Got message: " + text, Toast.LENGTH_SHORT).show();
                     sendResult("private", data);
+                }
+            });
+        }
+    };
+
+    private Emitter.Listener onRegister = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject data = (JSONObject) args[0];
+                    try {
+                        if (data.getString("token").equals("-1"))
+                        {
+                            Toast.makeText(StackFrameChat.this, "Invalid registration information", Toast.LENGTH_SHORT).show();
+                            Log.v("StackFrame-Backend", "Invalid login information. Received a -1 token value.");
+                            Intent intent = new Intent("failedRegister");
+                            intent.putExtra("action", "failedRegister");
+                            LocalBroadcastManager.getInstance(StackFrameChat.this).sendBroadcast(intent);
+                            return;
+                        }
+                    } catch (JSONException e) {
+                        Toast.makeText(StackFrameChat.this, "Something wrong with the message I got...", Toast.LENGTH_SHORT).show();
+                        Log.d("StackFrame-Backend", "Something wrong with the message I got..." + args[0].toString());
+                        return;
+                    }
+                    //Toast.makeText(StackFrameChat.this, "Got message: " + text, Toast.LENGTH_SHORT).show();
+                    sendResult("register", data);
+                    chat = new Intent(StackFrameChat.this, ChatActivity.class);
+                    chat.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(chat);
                 }
             });
         }
