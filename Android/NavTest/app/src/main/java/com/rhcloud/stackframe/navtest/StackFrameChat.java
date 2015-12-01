@@ -43,6 +43,7 @@ public class StackFrameChat extends Service
     String password;
     String socketid;
     String geoloc;
+    String avatar;
     Handler handler;
 
     Intent chat;
@@ -85,6 +86,7 @@ public class StackFrameChat extends Service
                 socket.on("message", onMessage);
                 socket.on("ready", onConnect);
                 socket.on("private", onPrivate);
+                socket.on("numberAvatars", onNumberAvatars);
                 socket.connect();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -105,11 +107,16 @@ public class StackFrameChat extends Service
             username = extra.getString("username");
             password = extra.getString("password");
             geoloc = extra.getString("geoloc");
+            avatar = extra.getString("avatar");
             register();
+        }
+        else if(extra.getString("action") != null && extra.getString("action").equals("numberAvatars"))
+        {
+            socket.emit("numberAvatars", 0);
         }
         else
         {
-            Toast.makeText(this, "Attempting to start service with invalid action: " + extra.getString("action"), Toast.LENGTH_SHORT).show();
+            Log.d("StackFrame-Backend", "Attempting to start service with invalid action: " + extra.getString("action"));
         }
 
         BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -255,6 +262,20 @@ public class StackFrameChat extends Service
         }
     };
 
+    private Emitter.Listener onNumberAvatars = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Log.v("StackFrame-Backend", "Received numberAvatars: " + args[0]);
+
+                    updateNumberAvatars((int) args[0]);
+                }
+            });
+        }
+    };
+
     /** Called when all clients have unbound with unbindService() */
     @Override
     public boolean onUnbind(Intent intent) {
@@ -279,11 +300,27 @@ public class StackFrameChat extends Service
         return null;
     }
 
-    public void sendResult(String action, JSONObject message) {
+    public void sendResult(String action, Object message) {
         Intent intent = new Intent("incomingMessage");
         intent.putExtra("action", action);
-        intent.putExtra("message", message.toString());
+        if(message.getClass() == JSONObject.class)
+        {
+            intent.putExtra("message", message.toString());
+        }
+        else
+        {
+            intent.putExtra("message", (int) message);
+        }
+
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    private void updateNumberAvatars(int  num)
+    {
+        Intent intent = new Intent("numberAvatars");
+        intent.putExtra("action", "numberAvatars");
+        intent.putExtra("message", num);
+        LocalBroadcastManager.getInstance(StackFrameChat.this).sendBroadcast(intent);
     }
 
     private void login()
@@ -312,11 +349,13 @@ public class StackFrameChat extends Service
             registerjson.put("username", username);
             registerjson.put("password", password);
             registerjson.put("geoloc", geoloc);
+            registerjson.put("avatar", avatar);
         } catch (Exception e) {
             Toast.makeText(this, "Error putting together registration data", Toast.LENGTH_SHORT).show();
             //Log.e("StackFrame-Backend", e.getStackTrace().toString());
             e.printStackTrace();
         }
+        Log.v("StackFrame-Backend", "Sending the following json array to register in StackFrame: " + registerjson.toString());
         socket.emit("register", registerjson);
     }
 

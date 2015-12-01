@@ -82,6 +82,7 @@ public class StackFrameChat extends Service
 
             socket.on("register", onRegister);
             socket.on("message", onMessage);
+            socket.on("numberAvatars", onNumberAvatars);
             socket.connect();
 
             JSONObject registerjson = new JSONObject();
@@ -177,6 +178,20 @@ public class StackFrameChat extends Service
                     }
                     //Toast.makeText(StackFrameChat.this, "Got message: " + text, Toast.LENGTH_SHORT).show();
                     sendResult(data);
+                }
+            });
+        }
+    };
+
+    private Emitter.Listener onNumberAvatars = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Log.v("StackFrame Backend", "NumberAvatars recieved: " + args[0]);
+                    //Toast.makeText(StackFrameChat.this, "Got message: " + text, Toast.LENGTH_SHORT).show();
+                    //sendResult(args[0]);
                 }
             });
         }

@@ -138,6 +138,10 @@ public class ChatActivity extends ActionBarActivity
                     Log.d("StackFrame-UI", "Got message: " + message);
                     //Toast.makeText(ChatActivity.this, "Got a message: " + message, Toast.LENGTH_SHORT).show();
                 }
+                else if(intent.getStringExtra("action").equals("private"))
+                {
+                    Toast.makeText(ChatActivity.this, "Time to load all " + intent.getStringExtra("message") + " avatars", Toast.LENGTH_SHORT).show();
+                }
             }
         };
         //Log.d("StackFrame UI", "View height (listview): " + chatView.getHeight());
