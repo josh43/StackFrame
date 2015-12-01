@@ -30,8 +30,6 @@ const int MAX_PASSWORD_LENGTH = 16;
     if(_loginView){
    // self.view = self.loginView;
     }
-        
-    
     return self;
 }
 
@@ -51,6 +49,27 @@ const int MAX_PASSWORD_LENGTH = 16;
     }];
     
     [chatSocket connect];
+    
+    [chatSocket on:@"login" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        NSLog(@"\n\n\n\n\nLOGIN CALLBACK\n\n\n\n\n");
+        
+        id json = data[0];
+        
+        NSLog(@"\n\n\nDATA: %@\n\n\n", data);
+        
+        NSLog(@"\n\n\nTOKEN: %@\n\n\n",[json objectForKey:@"token"]);
+        
+        if ([[NSString stringWithFormat:@"%@",[json objectForKey:@"token"]] isEqualToString:@"-1"]) {
+            [self alertStatus:@"Sign In Failed." :@"Incorect Username and or Password!" :0];
+        }else{
+            NSLog(@"\n\n\nLOGGING IN\n\n\n");
+            self.doneRegistering = YES;
+            self.uName= [[NSString alloc]initWithString:self.userName.text];
+            self.pWord = [[NSString alloc ]initWithString:self.passWord.text];
+            [self dismissViewControllerAnimated:YES completion:NULL];
+            [self.delegate appDoneRegistering:self :self.uName :self.pWord];
+        }
+    }];
     
 }
 
@@ -76,24 +95,6 @@ const int MAX_PASSWORD_LENGTH = 16;
     if([[self.userName text] isEqualToString:@""] || [[self.passWord text] isEqualToString:@""] ) {
         [self alertStatus:@"Please enter Username and Password" :@"Sign in Failed!" :0];
     }else{
-    
-    [chatSocket on:@"login" callback:^(NSArray* data, SocketAckEmitter* ack) {
-        NSLog(@"\n\n\n\n\nREGISTER CALLBACK\n\n\n\n\n");
-        
-        id json = data[0];
-        
-        NSLog(@"\n\n\nTOKEN: %@\n\n\n",[json objectForKey:@"token"]);
-        
-        if ([[NSString stringWithFormat:@"%@",[json objectForKey:@"token"]] isEqualToString:@"-1"]) {
-            [self alertStatus:@"Sign In Failed." :@"Incorect Username and or Password!" :0];
-        }else{
-            self.doneRegistering = YES;
-            self.uName= [[NSString alloc]initWithString:self.userName.text];
-            self.pWord = [[NSString alloc ]initWithString:self.passWord.text];
-            [self dismissViewControllerAnimated:YES completion:NULL];
-            [self.delegate appDoneRegistering:self :self.uName :self.pWord];
-        }
-    }];
     
     NSLog(@"\n\nREGISTER\n\n");
     

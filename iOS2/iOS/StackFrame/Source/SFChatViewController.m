@@ -81,6 +81,8 @@
         
         id json = data[0];
         
+        NSLog(@"\n\nmessage: %@\n\n",[json objectForKey:@"text"]);
+        
         SFMessage * messageToAdd = [[SFMessage alloc]initChatMessageWithString:[json objectForKey:@"text"]];
         [self.myStore.messageStore addObject:messageToAdd];
         [self.tableView reloadData];
