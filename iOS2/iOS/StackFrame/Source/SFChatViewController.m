@@ -83,7 +83,12 @@
         
         NSLog(@"\n\nmessage: %@\n\n",[json objectForKey:@"text"]);
         
-        SFMessage * messageToAdd = [[SFMessage alloc]initChatMessageWithString:[json objectForKey:@"text"]];
+       // [myString stringByAppendingString:@" is just a test"];
+        
+        NSString * userMessage = [[json objectForKey:@"username"] stringByAppendingString:@":"];
+        userMessage = [userMessage stringByAppendingString:[json objectForKey:@"text"]];
+        
+        SFMessage * messageToAdd = [[SFMessage alloc]initChatMessageWithString:userMessage];
         [self.myStore.messageStore addObject:messageToAdd];
         [self.tableView reloadData];
         NSLog(@"\n\nRELOAD TABLE\n\n");
