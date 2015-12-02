@@ -54,6 +54,8 @@
         self.displayPicture = nil;
         
         
+
+        
         self.likeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.likeButton setImage:self.numberLikesImage forState:UIControlStateNormal];
         [self.likeButton addTarget:self action:@selector(likedMe:) forControlEvents:UIControlEventTouchUpInside];
@@ -90,7 +92,8 @@
         
         
         self.chatMessage = [[UILabel alloc] init];
-       
+        self.chatMessage.lineBreakMode =UILineBreakModeWordWrap;
+        self.chatMessage.numberOfLines = 0;
         self.numberLikes = [[UILabel alloc]init];
         
         

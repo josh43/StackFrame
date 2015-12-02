@@ -10,10 +10,10 @@
 #import "SocketIO.h"
 
 @interface SFRegister ()
-
 @end
 
 @implementation SFRegister	
+static BOOL doneRegistering = NO;
 
 - (void)viewDidLoad {
     _doneRegistering = NO;
@@ -44,7 +44,10 @@
             [_passwordOneField resignFirstResponder];
             [_passwordTwoField resignFirstResponder];
             //Code that presents or dismisses a view controller here
-            [_delegate appDoneRegistering:self :strongPointa :passWord];
+            if(doneRegistering == NO){
+                [_delegate appDoneRegistering:self :strongPointa :passWord];
+                doneRegistering = YES;
+            }
         }
         
     }];

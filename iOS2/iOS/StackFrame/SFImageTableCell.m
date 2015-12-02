@@ -65,6 +65,9 @@
         self.userImage = userPic;
         self.chatButtonImage = chatImage;
         self.theDisplayPic= nil;
+        
+        self.textLabel.lineBreakMode =UILineBreakModeWordWrap;
+        self.textLabel.numberOfLines = 0;
         //self.displayPicture = nil;
         self.displayPictureView = [[UIImageView alloc]init];
         
