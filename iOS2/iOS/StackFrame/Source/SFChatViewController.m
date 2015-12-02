@@ -85,7 +85,7 @@
         
        // [myString stringByAppendingString:@" is just a test"];
         
-        NSString * userMessage = [[json objectForKey:@"username"] stringByAppendingString:@":"];
+        NSString * userMessage = [[json objectForKey:@"username"] stringByAppendingString:@":\n"];
         userMessage = [userMessage stringByAppendingString:[json objectForKey:@"text"]];
         
         SFMessage * messageToAdd = [[SFMessage alloc]initChatMessageWithString:userMessage];
