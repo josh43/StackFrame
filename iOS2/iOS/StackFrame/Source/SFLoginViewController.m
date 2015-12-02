@@ -42,6 +42,7 @@ const int MAX_PASSWORD_LENGTH = 16;
     UIColor * col= [UIColor colorWithRed:r green:g blue:b alpha:1.0f];
     self.view.backgroundColor =  col;
 
+    //nodejs
     chatSocket = [[SocketIOClient alloc] initWithSocketURL:@"http://nodejs-stackframe.rhcloud.com/" options:@{@"log": @YES, @"forcePolling": @YES}];
     
     [chatSocket on:@"connect" callback:^(NSArray* data, SocketAckEmitter* ack) {
