@@ -439,8 +439,11 @@ NSArray *cells = [self.tableView visibleCells];
     
     // BEGIN
    // self.userName,@"user",self.texField.text
+    
+    double timestamp = [[NSDate date] timeIntervalSince1970];
+    int64_t timeInMilisInt64 = (int64_t)((timestamp*1000) - 60000);
 
-    NSString *messageString = [NSString stringWithFormat:@"[{\"username\":\"%@\", \"token\":\"123\", \"type\":\"text\", \"date\":\"14124124124\", \"text\":\"%@\", \"serverid\":\"123\"}]",self.userName, self.texField.text];
+    NSString *messageString = [NSString stringWithFormat:@"[{\"username\":\"%@\", \"token\":\"123\", \"type\":\"text\", \"date\":\"%lld\", \"text\":\"%@\", \"serverid\":\"123\"}]",self.userName, timeInMilisInt64, self.texField.text];
     NSLog(@"\n\nstringData=%@\n\n", messageString);
     NSArray *messageJSON = [NSJSONSerialization JSONObjectWithData:[messageString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:NULL];
     NSArray *tableData = messageJSON;

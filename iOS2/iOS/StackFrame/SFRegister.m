@@ -35,7 +35,7 @@
         NSLog(@"\n\n\nDATA: %@\n\n\n", data);
         
         if ([[NSString stringWithFormat:@"%@",[json objectForKey:@"token"]] isEqualToString:@"-1"]) {
-            [self alertStatus:@"Username is in use" :@"Sign up Failed!" :0];
+            [self alertStatus:@"Username is in use" :@"Siµgn up Failed!" :0];
         }else{
             
             NSString * strongPointa = [[NSString alloc]initWithString:_userNameField.text];
