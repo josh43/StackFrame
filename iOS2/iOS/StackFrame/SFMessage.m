@@ -40,16 +40,19 @@ const int NAME = 10;
 }
 -(instancetype)initChatMessageWithString:(NSString *) userName message :(NSString *)theMessage
                                  withID :(NSInteger ) messageID withTime:(NSDate *) time withLikes:(NSInteger )likes
-                            withDisLikes:(NSInteger) dislikes{
+                            withDisLikes:(NSInteger) dislikes
+                         withUserPicture:(UIImage *) myPicture
+{
+    
 
     self = [self init];
+    _myPictureImage = myPicture;
     _messageID = messageID;
     _datePosted = time;
     _numLikes = likes;
     _numDisLikes = dislikes;
     _name = userName;
    
-    
     self.messageStorage = [[SFChatMessage alloc]initWithString:theMessage];
     self.messageType = CHAT_MESSAGE_ID;
     

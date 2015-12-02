@@ -376,10 +376,10 @@ NSArray *cells = [self.tableView visibleCells];
         
         if([[message messageStorage] isMemberOfClass:[SFChatMessage class]]){
             
-            cell = [[SFTableViewCell alloc]initMessageCellWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleID iOSDevice:_phone_type userPic:nil likeButton:_coolBrahIcon dislikeButton:_middleFingerIcon chatButtonImage:_commentIcon];
+            cell = [[SFTableViewCell alloc]initMessageCellWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleID iOSDevice:_phone_type userPic:[message myPictureImage] likeButton:_coolBrahIcon dislikeButton:_middleFingerIcon chatButtonImage:_commentIcon];
             
         }else{
-            cell = [[SFImageTableCell alloc]initMessageCellWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleID iOSDevice:_phone_type userPic:nil likeButton:_coolBrahIcon dislikeButton:_middleFingerIcon chatButtonImage:_commentIcon];
+            cell = [[SFImageTableCell alloc]initMessageCellWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleID iOSDevice:_phone_type userPic:[message myPictureImage] likeButton:_coolBrahIcon dislikeButton:_middleFingerIcon chatButtonImage:_commentIcon];
         }
         
         //24E3EB

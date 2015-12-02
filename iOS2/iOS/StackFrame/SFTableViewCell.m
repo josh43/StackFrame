@@ -52,6 +52,7 @@
         self.userImage = userPic;
         self.chatButtonImage = chatImage;
         self.displayPicture = nil;
+        //UIImage * disp = [[UIImage alloc]initWithContentsOfFile:<#(nonnull NSString *)#>]
         
         
 

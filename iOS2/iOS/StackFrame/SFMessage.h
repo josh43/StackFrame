@@ -24,10 +24,14 @@
 
 -(instancetype)init;
 -(instancetype)initChatMessageWithString:(NSString *) theT;
--(instancetype)initChatMessageWithString:(NSString *) userName message :(NSString *)theMessage
-                                 withID :(NSInteger) messageID withTime:(NSDate *) time
+
+-(instancetype)initChatMessageWithString:(NSString *) userName
+                                message :(NSString *)theMessage
+                                 withID :(NSInteger) messageID
+                                withTime:(NSDate *) time
                                withLikes:(NSInteger )likes
-                            withDisLikes:(NSInteger) dislikes;
+                            withDisLikes:(NSInteger) dislikes
+                         withUserPicture:(UIImage *) myPicture;
 -(instancetype)initPictureMessage       :(NSString *) userName picture :(NSString*)thePicture
                                  withID :(NSInteger) messageID withTime:(NSDate *) time
                                withLikes:(NSInteger )likes
@@ -39,6 +43,7 @@
 @property(nonatomic) NSInteger  numDisLikes;
 @property(nonatomic) NSInteger messageID;
 @property(nonatomic) NSInteger messageType;
+@property(nonatomic) UIImage * myPictureImage;
 @property(nonatomic, strong) id messageStorage;
 
 

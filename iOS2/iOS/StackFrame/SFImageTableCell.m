@@ -64,7 +64,7 @@
         self.numberLikesImage = likeButton;
         self.userImage = userPic;
         self.chatButtonImage = chatImage;
-        self.theDisplayPic= nil;
+        self.theDisplayPic= chatImage;
         
         self.textLabel.lineBreakMode =UILineBreakModeWordWrap;
         self.textLabel.numberOfLines = 0;
