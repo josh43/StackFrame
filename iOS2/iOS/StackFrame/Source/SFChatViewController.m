@@ -83,14 +83,24 @@
         
         NSLog(@"\n\nmessage: %@\n\n",[json objectForKey:@"text"]);
         
-       // [myString stringByAppendingString:@" is just a test"];
-        
         NSString * userMessage = [[json objectForKey:@"username"] stringByAppendingString:@":\n"];
         userMessage = [userMessage stringByAppendingString:[json objectForKey:@"text"]];
         
         SFMessage * messageToAdd = [[SFMessage alloc]initChatMessageWithString:userMessage];
-        [self.myStore.messageStore addObject:messageToAdd];
-        [self.tableView reloadData];
+        
+        NSString * URL = [ @"http://nodejs-stackframe.rhcloud.com/img" stringByAppendingString:[NSString stringWithFormat:@"%@",[json objectForKey:@"avatar"]]];
+
+        dispatch_async(dispatch_get_global_queue(0,0), ^{
+            NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: URL]];
+            if ( data == nil )
+                return;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                messageToAdd.myPictureImage = [UIImage imageWithData: data];
+                [self.myStore.messageStore addObject:messageToAdd];
+                [self.tableView reloadData];
+            });
+        });
+
         NSLog(@"\n\nRELOAD TABLE\n\n");
     }];
 }
@@ -318,6 +328,8 @@ NSArray *cells = [self.tableView visibleCells];
     _texField.keyboardAppearance = UIKeyboardAppearanceDark;
     //[self publish];
     _texField.hidden = NO;
+    
+    _texField.text = @"";
     
    // _texField.textColor = [UIColor blackColor];
     //_texField.frame =CGRectMake(0, 300, _texField.frame.size.width, _texField.frame.size.height);

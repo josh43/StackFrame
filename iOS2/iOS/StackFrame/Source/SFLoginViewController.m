@@ -79,8 +79,6 @@ const int MAX_PASSWORD_LENGTH = 16;
     // Dispose of any resources that can be recreated.
 }
 
-
-
 -(BOOL)validateInformation:(NSString *)userName :(NSString *)password{
     
     
