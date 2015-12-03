@@ -1,57 +1,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/chatlayout"
+    android:id="@+id/profilelayout"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/avatarView"
         android:layout_gravity="center"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_weight="0"
-        android:src="@mipmap/ic_launcher"
         />
 
     <LinearLayout
         android:id="@+id/layout"
-        android:layout_width="match_parent"
+        android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="1"
         android:weightSum="1">
 
-
         <TextView
             android:id="@+id/usernameView"
             android:layout_gravity="start"
+            android:textSize="@dimen/abc_text_size_headline_material"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold|italic"
             android:textColor="@color/fontColorDark"
-            android:text="Message text not set."/>
-
+            android:text="[Loading Username]"/>
 
         <TextView
-            android:id="@+id/text"
+            android:id="@+id/scoreView"
+            android:textSize="@dimen/abc_text_size_large_material"
             android:layout_gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/fontColorDark"
-            android:text="Message text not set."/>
-
-        <TextView
-            android:id="@+id/date"
-            android:textSize="@dimen/abc_text_size_body_1_material"
-            android:layout_gravity="end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:paddingBottom="12dp"
             android:layout_marginRight="2dp"
             android:layout_weight="1"
-            android:text="Date not set." />
+            android:text="[Loading Score]"
+            />
 
     </LinearLayout>
 
