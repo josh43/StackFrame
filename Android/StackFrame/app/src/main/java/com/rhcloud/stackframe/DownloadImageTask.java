@@ -18,11 +18,8 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     int index;
     LruCache<String, Bitmap> cache;
 
-    public DownloadImageTask(ImageView bmImage) {
+    public DownloadImageTask(ImageView bmImage, LruCache<String, Bitmap> cache) {
         this.bmImage = bmImage;
-    }
-
-    protected Bitmap doInBackground(String... urls) {
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
         final int cacheSize = maxMemory / 8;
 
@@ -34,12 +31,15 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
                 return bitmap.getByteCount() / 1024;
             }
         };
+    }
+
+    protected Bitmap doInBackground(String... urls) {
         String urldisplay = urls[0];
         String avatarIndex= urls[1];
         if(avatarIndex != null && getBitmapFromMemCache(avatarIndex) != null)
         {
             Log.v("StackFrame-UI", "Image " + avatarIndex + " found in cache");
-            return cache.get(avatarIndex);
+            return getBitmapFromMemCache(avatarIndex);
         }
         else
         {
@@ -49,8 +49,9 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
                 InputStream in = new java.net.URL(urldisplay + avatarIndex).openStream();
                 mIcon = BitmapFactory.decodeStream(in);
                 addBitmapToMemoryCache(avatarIndex, mIcon);
+                Log.v("StackFrame-UI", "Added image '" + avatarIndex + "' to cache" );
             } catch (Exception e) {
-                Log.e("StackFrame-Backend", e.getMessage());
+                Log.e("StackFrame-UI", e.getMessage());
                 e.printStackTrace();
             }
             //avatarCache.add(index, mIcon11);
@@ -72,6 +73,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     }
 
     public Bitmap getBitmapFromMemCache(String key) {
-        return cache.get(key);
+        if(cache != null) return cache.get(key);
+        else return null;
     }
 }

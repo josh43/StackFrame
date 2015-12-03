@@ -57,7 +57,7 @@ public class UIAnimator
     }
 
 
-    public void growView(int length, Position from, final boolean fade, Runnable callback)
+    public void growView(int length, Position from, final boolean fade, final Runnable callback)
     {
 
         ValueAnimator loginShrink = ObjectAnimator.ofFloat(0f, 1f);
@@ -92,7 +92,7 @@ public class UIAnimator
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 animated.setAlpha(1f);
-
+                if(callback != null) callback.run();
             }
         });
         loginShrink.start();

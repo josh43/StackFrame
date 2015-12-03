@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -283,9 +284,16 @@ public class Login extends AppCompatActivity {
         }
         else
         {
-            loginService.putExtra("action", "startup");
-            stopService(loginService);
-            startService(loginService);
+            //if(loginService.)
+            //loginService.putExtra("action", "startup");
+            //stopService(loginService);
+            //startService(loginService);
+
+            if(isMyServiceRunning(loginService.getClass()))
+            {
+                Toast.makeText(Login.this, "Service verified running", Toast.LENGTH_SHORT).show();
+            }
+
             loginView.setVisibility(View.GONE);
             registerView.setVisibility(View.GONE);
             usernameView.setVisibility(View.VISIBLE);
@@ -340,7 +348,7 @@ public class Login extends AppCompatActivity {
                 String[] temp = new String[2];
                 temp[0] = getString(R.string.serverurl) + "/img";
                 temp[1] = i + "";
-                new DownloadImageTask(tempView).execute(temp);
+                new DownloadImageTask(tempView, cache).execute(temp);
                 tempView.setVisibility(View.VISIBLE);
                 tempView.setMaxWidth(base.getWidth() / rowSize);
                 tempView.setMinimumHeight(base.getWidth() / rowSize);
@@ -389,5 +397,18 @@ public class Login extends AppCompatActivity {
         Intent login = getIntent();
         finish();
         startActivity(login);
+    }
+
+    private boolean isMyServiceRunning( Class<?> serviceClass)
+    {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for(ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE))
+        {
+            if(serviceClass.getName().equals(service.service.getClassName()))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -35,7 +35,7 @@ public class BubbleAdapter extends BaseAdapter {
     LruCache<String, Bitmap> cache;
     Intent loginService;
 
-    public BubbleAdapter(Activity mainActivity, ArrayList<Message> messages)
+    public BubbleAdapter(Activity mainActivity, ArrayList<Message> messages, LruCache<String, Bitmap> cache)
     {
         list = messages;
         context = mainActivity;
@@ -91,7 +91,7 @@ public class BubbleAdapter extends BaseAdapter {
             String[] temp = new String[2];
             temp[0] = context.getString(R.string.serverurl) + "/img";
             temp[1] = list.get(position).getAvatar();
-            new DownloadImageTask(bubble.avatar).execute(temp);
+            new DownloadImageTask(bubble.avatar, cache).execute(temp);
         }
         bubble.username.setText(list.get(position).getUsername() + ":");
         bubble.text.setText(list.get(position).getText());

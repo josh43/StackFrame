@@ -5,11 +5,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.IBinder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.util.LruCache;
 import android.widget.Toast;
 import android.os.Handler;
 
@@ -50,13 +52,17 @@ public class StackFrameChat extends Service
 
     String token;
     int serverid;
-    Long lastMessage = new Date().getTime();
+    long lastMessage = new Date().getTime();
 
     LocalBroadcastManager broadcast;
     BroadcastReceiver mMessageReceiver;
     SharedPreferences loginInfo;
     SharedPreferences.Editor loginEditor;
     Bundle extra;
+    int messageWait = 10;
+    String lastMessageSender = "";
+    String lastMessageText = "";
+    //long lastMessage = 0;
 
     /** Called when the service is being created. */
     @Override
@@ -254,12 +260,22 @@ public class StackFrameChat extends Service
             handler.post(new Runnable() {
                 @Override
                 public void run() {
+
                     JSONObject data = (JSONObject) args[0];
                     String username;
                     String text = "";
                     try {
                         username = data.getString("username");
                         text = data.getString("text");
+
+                        if(new Date().getTime() - lastMessage < messageWait && lastMessageSender.equals(username) && lastMessageText.equals(text))
+                        {
+                            Log.d("StackFrame-Backend", "Message duplicate detected. Ignoring.");
+                            return;
+                        }
+
+                        lastMessageSender = username;
+                        lastMessageText = text;
                     } catch (JSONException e) {
                         //Toast.makeText(StackFrameChat.this, "Something wrong with the message I got...", Toast.LENGTH_SHORT).show();
                         Log.d("StackFrame-Backend", "Something wrong with the message I got..." + args[0].toString());

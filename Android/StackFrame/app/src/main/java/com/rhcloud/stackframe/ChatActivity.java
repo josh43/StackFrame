@@ -66,6 +66,7 @@ public class ChatActivity extends ActionBarActivity
     //LruCache<String, Bitmap> cache;
     DownloadImageTask imageDownloader;
     Intent loginService;
+    LruCache<String, Bitmap> cache;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,17 @@ public class ChatActivity extends ActionBarActivity
         getSupportActionBar().setLogo(R.drawable.ic_drawer);
 
         avatarCache = new ArrayList<Bitmap>();
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        final int cacheSize = maxMemory / 8;
+
+        cache = new LruCache<String, Bitmap>(cacheSize)
+        {
+            @Override
+            protected int sizeOf(String key, Bitmap bitmap)
+            {
+                return bitmap.getByteCount() / 1024;
+            }
+        };
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -108,7 +120,7 @@ public class ChatActivity extends ActionBarActivity
             }
         });
 
-        arrayAdapter = new BubbleAdapter(this, chat);
+        arrayAdapter = new BubbleAdapter(this, chat, cache);
 
         chatView.setAdapter(arrayAdapter);
 
@@ -185,7 +197,7 @@ public class ChatActivity extends ActionBarActivity
                         String[] temp = new String[2];
                         temp[0] = context.getString(R.string.serverurl) + "/img";
                         temp[1] = avatar;
-                        imageDownloader = new DownloadImageTask(avatarView);
+                        imageDownloader = new DownloadImageTask(avatarView, cache);
                         imageDownloader.execute(temp);
                         TextView usernameView = (TextView) profile.findViewById(R.id.usernameView);
                         TextView scoreView = (TextView) profile.findViewById(R.id.scoreView);
