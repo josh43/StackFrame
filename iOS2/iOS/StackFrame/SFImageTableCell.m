@@ -20,14 +20,6 @@
 
 
 
-
-
-
-
-
-
-
-
 - (void)awakeFromNib {
     // Initialization code
 }
@@ -46,7 +38,6 @@
        
             self.theDisplayPic = [_myPost messageStorage];
             self.displayPictureView.image= self.theDisplayPic;
-        
         }
     
         self.numberLikes.text = [NSString stringWithFormat:@"%ld",[_myPost numLikes]];

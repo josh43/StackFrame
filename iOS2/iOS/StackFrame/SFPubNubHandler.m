@@ -62,7 +62,7 @@
                                             switch (action) {
                                                 case ACTION_USER_POSTED_MESSAGE:{
                                                     NSLog(@"boom boom boom\n");
-                                                    messageToAdd = [[SFMessage alloc]initChatMessageWithString:userName message:(NSString *)data withID:[messageID integerValue] withTime:myDate withLikes:0 withDisLikes:0];
+                                                   // messageToAdd = [[SFMessage alloc]initChatMessageWithString:userName message:(NSString *)data withID:[messageID integerValue] withTime:myDate withLikes:0 withDisLikes:0];
                                                     break;
                                                 }
                                                 case ACTION_USER_POSTED_PICTURE:{
@@ -266,7 +266,7 @@
             switch (action) {
                 case ACTION_USER_POSTED_MESSAGE:{
                     NSLog(@"boom boom boom\n");
-                    messageToAdd = [[SFMessage alloc]initChatMessageWithString:userName message:data withID:[messageID integerValue] withTime:myDate withLikes:0 withDisLikes:0];
+                    //messageToAdd = [[SFMessage alloc]initChatMessageWithString:userName message:data withID:[messageID integerValue] withTime:myDate withLikes:0 withDisLikes:0];
                     break;
                 }
                 case ACTION_USER_POSTED_PICTURE:{
